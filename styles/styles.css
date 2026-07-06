@@ -11,13 +11,27 @@
  */
 
 :root {
-  /* colors */
+  /* HAL brand palette (mirrors the Sanity/Storyblok POC tokens) */
+  --hal-navy: #1d3557;
+  --hal-navy-dark: #0f1f3d;
+  --hal-navy-light: #2a4a7f;
+  --hal-gold: #c9a84c;
+  --hal-blue: #1976d2;
+  --hal-blue-light: #e3f2fd;
+  --hal-gray-100: #f1f3f5;
+  --hal-gray-200: #e9ecef;
+  --hal-gray-300: #dee2e6;
+  --hal-gray-500: #adb5bd;
+  --hal-gray-700: #495057;
+  --hal-gray-900: #212529;
+
+  /* colors (semantic tokens consumed by blocks, mapped to HAL palette) */
   --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  --light-color: var(--hal-gray-100);
+  --dark-color: var(--hal-gray-700);
+  --text-color: var(--hal-gray-900);
+  --link-color: var(--hal-navy);
+  --link-hover-color: var(--hal-navy-light);
 
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;

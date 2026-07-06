@@ -172,6 +172,34 @@
           }
         },
         {
+          "title": "Hero Search",
+          "id": "hero-search",
+          "model": "hero-search",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"hero-search\"><div><div><picture><img loading=\"lazy\" alt=\"\" src=\"\"></picture></div></div><div><div><h1>Savor Every Moment</h1><p>Set sail on a journey of discovery with Holland America Line.</p></div></div></div>",
+              "fields": [
+                {
+                  "name": "image",
+                  "selector": "div:nth-child(1)>div>picture>img[src]"
+                },
+                {
+                  "name": "imageAlt",
+                  "selector": "div:nth-child(1)>div>picture>img[alt]"
+                },
+                {
+                  "name": "heading",
+                  "selector": "div:nth-child(2)>div>h1"
+                },
+                {
+                  "name": "subheading",
+                  "selector": "div:nth-child(2)>div>p"
+                }
+              ]
+            }
+          }
+        },
+        {
           "title": "Schedule",
           "id": "schedule",
           "model": "schedule",

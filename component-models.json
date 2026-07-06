@@ -327,6 +327,37 @@
     ]
   },
   {
+    "id": "hero-search",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "label": "Heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "subheading",
+        "label": "Subheading"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image",
+        "multi": false,
+        "description": "Optional. Sits behind a navy overlay."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Background Image Alt"
+      }
+    ]
+  },
+  {
     "id": "schedule",
     "fields": [
       {

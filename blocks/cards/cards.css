@@ -25,3 +25,36 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+/* HAL homepage card variants (Popular Destinations, Why Holland America) */
+.cards.destinations > ul > li,
+.cards.features > ul > li {
+  border: 1px solid var(--hal-gray-200);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.cards.features > ul > li {
+  background: transparent;
+  border: 0;
+}
+
+.cards.destinations > ul > li:hover {
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+}
+
+.cards.destinations h3,
+.cards.features h3 {
+  color: var(--hal-navy);
+  font-size: var(--heading-font-size-s);
+  margin-top: 0;
+}
+
+.cards.features {
+  text-align: center;
+}
+
+.cards.features > ul {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
