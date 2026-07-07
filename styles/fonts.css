@@ -1,4 +1,17 @@
 /* stylelint-disable max-line-length */
+
+/*
+ * Holland America brand fonts are licensed Adobe Fonts (Typekit):
+ *   - "quasimoda"        → body + headings (h2–h6)
+ *   - "minion-3-display" → display serif for h1
+ * These require this project's own Adobe Fonts web-project kit. Once created,
+ * enable the real brand fonts by uncommenting the import below with your kit id:
+ *
+ *   @import url("https://use.typekit.net/<YOUR_KIT_ID>.css");
+ *
+ * Until then, the font stacks in styles.css fall back to Roboto (below).
+ */
+
 @font-face {
   font-family: roboto-condensed;
   font-style: normal;

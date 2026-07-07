@@ -8,12 +8,18 @@
 }
 
 .cards > ul > li {
-  border: 1px solid #dadada;
+  border: 1px solid var(--border-color);
   background-color: var(--background-color);
 }
 
 .cards .cards-card-body {
   margin: 16px;
+  font-family: var(--body-font-family);
+}
+
+.cards .cards-card-body h3 {
+  font-family: var(--heading-font-family);
+  color: var(--text-color);
 }
 
 .cards .cards-card-image {
