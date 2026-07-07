@@ -19,6 +19,14 @@
   --link-color: #3b63fb;
   --link-hover-color: #1d3ecf;
 
+  /* brand colors (imported from poc-adobe-eds for hero/cards blocks) */
+  --nav-bg-color: #036;
+  --nav-bg-hover-color: #1a2b49;
+  --nav-text-color: #fff;
+  --border-color: #d1d9e6;
+  --cta-color: #e87722;
+  --cta-hover-color: #cc6619;
+
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
   --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
