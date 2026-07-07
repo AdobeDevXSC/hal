@@ -27,9 +27,16 @@
   --link-hover-color: #e46c24;
 
   /* ui tokens */
-  --border-color: #dadada;
+  --border-color: #d1d9e6;
   --overlay-color: rgb(2 38 88 / 75%);
   --overlay-color-light: rgb(2 38 88 / 35%);
+
+  /* block aliases (hero/cards from poc-adobe-eds) mapped to the brand palette */
+  --nav-bg-color: var(--brand-navy);
+  --nav-bg-hover-color: var(--brand-navy-dark);
+  --nav-text-color: #fff;
+  --cta-color: var(--accent-color);
+  --cta-hover-color: var(--accent-hover-color);
 
   /* fonts */
   --body-font-family: quasimoda, roboto, roboto-fallback, sans-serif;
