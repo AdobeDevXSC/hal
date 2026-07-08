@@ -43,6 +43,10 @@
   --heading-font-family: quasimoda, roboto, roboto-fallback, sans-serif;
   --display-font-family: "minion-3-display", georgia, "times new roman", serif;
 
+  /* nav font — matches hollandamerica.com; upgrades to quasimoda once the
+     Adobe Fonts kit <link> is added to head.html (see placeholder there) */
+  --nav-font: quasimoda, var(--body-font-family);
+
   /* body sizes */
   --body-font-size-m: 18px;
   --body-font-size-s: 16px;
