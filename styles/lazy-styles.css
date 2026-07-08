@@ -1,1 +1,33 @@
 /* add global styles that can be loaded post LCP here */
+
+/*
+ * Page-level theme: "map"
+ * Authors enable it by setting the page metadata `theme` to `map`, which
+ * aem.js turns into a `map` class on <body> (see decorateTemplateAndTheme).
+ * It paints Holland America's illustrated route map as a full-page wallpaper
+ * that scrolls with the content. The image is an authored asset served from
+ * the site's content path.
+ */
+body.map {
+  background-color: #022658;
+  background-image: url("/en/bg-image/media_10ead71e9c8ea3a31cc74259d6397c1b2b7f5eac4.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  color: #fff;
+}
+
+/* the wallpaper is dark, so lift text to light for contrast (mirrors .section.dark) */
+body.map h1,
+body.map h2,
+body.map h3,
+body.map h4,
+body.map h5,
+body.map h6 {
+  color: #fff;
+}
+
+body.map a:not(.button) {
+  color: #fff;
+  text-decoration: underline;
+}
