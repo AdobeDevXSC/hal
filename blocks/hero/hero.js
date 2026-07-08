@@ -59,6 +59,23 @@ function loadHeroVideo(block, url) {
 }
 
 /**
+ * Whether the video backdrop should load. It is a heavy autoplay asset, so it
+ * is limited to larger viewports on capable connections and skipped for
+ * reduced-motion or data-saver users. In those cases the poster image remains,
+ * which also keeps it as the LCP element on constrained (mobile) connections.
+ * @returns {boolean}
+ */
+function shouldLoadHeroVideo() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+  if (!window.matchMedia('(min-width: 900px)').matches) return false;
+  const conn = navigator.connection;
+  if (conn && (conn.saveData || ['slow-2g', '2g', '3g'].includes(conn.effectiveType))) {
+    return false;
+  }
+  return true;
+}
+
+/**
  * loads and decorates the hero
  * @param {Element} block The hero block element
  */
@@ -113,8 +130,8 @@ export default function decorate(block) {
   if (mediaEl) block.append(mediaEl);
   block.append(contentEl);
 
-  // Defer the video until after LCP, and only when motion is allowed.
-  if (videoUrl && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  // Defer the video until after LCP, and only under capable conditions.
+  if (videoUrl && shouldLoadHeroVideo()) {
     const start = () => loadHeroVideo(block, videoUrl);
     if (document.readyState === 'complete') {
       start();
