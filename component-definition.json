@@ -136,6 +136,34 @@
           }
         },
         {
+          "title": "Cruise Ships",
+          "id": "cruise-ships",
+          "model": "cruise-ships",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"cruise-ships\"><div><div>heroHeading</div><div>Our Ships</div></div><div><div>heroSubheading</div><div>Explore the Holland America Line fleet and find the ship that’s right for you.</div></div><div><div>endpoint</div><div></div></div><div><div>detailBase</div><div>/en/us/cruise-ships</div></div></div>",
+              "fields": [
+                {
+                  "name": "heroHeading",
+                  "selector": "div:nth-child(1)>div:nth-child(2)"
+                },
+                {
+                  "name": "heroSubheading",
+                  "selector": "div:nth-child(2)>div:nth-child(2)"
+                },
+                {
+                  "name": "endpoint",
+                  "selector": "div:nth-child(3)>div:nth-child(2)"
+                },
+                {
+                  "name": "detailBase",
+                  "selector": "div:nth-child(4)>div:nth-child(2)"
+                }
+              ]
+            }
+          }
+        },
+        {
           "title": "Fragment",
           "id": "fragment",
           "model": "fragment",
@@ -166,6 +194,34 @@
                 {
                   "name": "content",
                   "selector": "div:nth-child(2)>div"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "title": "Hero Search",
+          "id": "hero-search",
+          "model": "hero-search",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"hero-search\"><div><div><picture><img loading=\"lazy\" alt=\"\" src=\"\"></picture></div></div><div><div><h1>Savor Every Moment</h1><p>Set sail on a journey of discovery with Holland America Line.</p></div></div></div>",
+              "fields": [
+                {
+                  "name": "image",
+                  "selector": "div:nth-child(1)>div>picture>img[src]"
+                },
+                {
+                  "name": "imageAlt",
+                  "selector": "div:nth-child(1)>div>picture>img[alt]"
+                },
+                {
+                  "name": "heading",
+                  "selector": "div:nth-child(2)>div>h1"
+                },
+                {
+                  "name": "subheading",
+                  "selector": "div:nth-child(2)>div>p"
                 }
               ]
             }

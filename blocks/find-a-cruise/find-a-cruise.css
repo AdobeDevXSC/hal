@@ -1,0 +1,296 @@
+.find-a-cruise {
+  display: block;
+}
+
+/* Hero banner */
+.find-a-cruise .find-a-cruise-hero {
+  background: var(--hal-navy);
+  color: #fff;
+  padding: 56px 24px;
+  text-align: center;
+}
+
+.find-a-cruise .find-a-cruise-hero-heading {
+  color: #fff;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  margin: 0 0 8px;
+}
+
+.find-a-cruise .find-a-cruise-hero-subheading {
+  margin: 0;
+  color: rgb(255 255 255 / 80%);
+  font-weight: 300;
+}
+
+/* Layout */
+.find-a-cruise .find-a-cruise-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  background: var(--hal-gray-100);
+}
+
+.find-a-cruise .find-a-cruise-headline {
+  font-size: var(--heading-font-size-l);
+  font-weight: 300;
+  color: var(--hal-navy);
+  text-align: center;
+  margin: 16px 0 24px;
+}
+
+/* Filter controls */
+.find-a-cruise .find-a-cruise-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--hal-gray-300);
+}
+
+.find-a-cruise .find-a-cruise-pill {
+  appearance: none;
+  background: #fff;
+  border: 1px solid var(--hal-gray-300);
+  border-radius: 4px;
+  padding: 10px 32px 10px 14px;
+  font-size: var(--body-font-size-xs);
+  color: var(--hal-gray-900);
+  cursor: pointer;
+  min-width: 150px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.find-a-cruise .find-a-cruise-pill:hover {
+  border-color: var(--hal-navy);
+}
+
+.find-a-cruise .find-a-cruise-pill:focus-visible {
+  outline: none;
+  border-color: var(--hal-blue);
+  box-shadow: 0 0 0 2px rgb(25 118 210 / 20%);
+}
+
+.find-a-cruise .find-a-cruise-pill-active {
+  border-color: var(--hal-navy);
+  background-color: var(--hal-blue-light);
+  font-weight: 500;
+}
+
+.find-a-cruise .find-a-cruise-sort {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.find-a-cruise .find-a-cruise-sort-label {
+  font-size: var(--body-font-size-xs);
+  color: var(--hal-gray-700);
+  margin-right: 8px;
+}
+
+/* Results */
+.find-a-cruise .find-a-cruise-results {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.find-a-cruise .find-a-cruise-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--hal-gray-200);
+  border-radius: 4px;
+  background: #fff;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.find-a-cruise .find-a-cruise-card:hover {
+  box-shadow: 0 8px 20px rgb(0 0 0 / 12%);
+}
+
+.find-a-cruise .find-a-cruise-card-media {
+  position: relative;
+  width: 100%;
+  min-height: 160px;
+  background: var(--hal-gray-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.find-a-cruise .find-a-cruise-card-media-placeholder {
+  color: var(--hal-gray-500);
+  font-size: var(--body-font-size-xs);
+}
+
+.find-a-cruise .find-a-cruise-card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--hal-red, #c62828);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.find-a-cruise .find-a-cruise-card-content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.find-a-cruise .find-a-cruise-card-title {
+  font-size: var(--heading-font-size-xs);
+  font-weight: 700;
+  color: var(--hal-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0 0 12px;
+}
+
+.find-a-cruise .find-a-cruise-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: var(--body-font-size-xs);
+  color: var(--hal-gray-700);
+  margin-bottom: 12px;
+}
+
+.find-a-cruise .find-a-cruise-card-info > div {
+  display: flex;
+  gap: 8px;
+}
+
+.find-a-cruise .find-a-cruise-card-label {
+  font-weight: 600;
+  color: var(--hal-gray-500);
+  width: 56px;
+  flex-shrink: 0;
+}
+
+.find-a-cruise .find-a-cruise-card-date {
+  font-size: var(--body-font-size-xs);
+  color: var(--hal-gray-700);
+  margin: 0 0 12px;
+}
+
+.find-a-cruise .find-a-cruise-card-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--hal-gray-100);
+  gap: 12px;
+}
+
+.find-a-cruise .find-a-cruise-card-price-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--hal-gray-500);
+}
+
+.find-a-cruise .find-a-cruise-card-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.find-a-cruise .find-a-cruise-card-price-value {
+  font-size: var(--heading-font-size-s);
+  font-weight: 700;
+  color: var(--hal-navy);
+}
+
+.find-a-cruise .find-a-cruise-card-price-was {
+  font-size: var(--body-font-size-xs);
+  color: var(--hal-gray-500);
+  text-decoration: line-through;
+}
+
+.find-a-cruise .find-a-cruise-card-price-note {
+  display: block;
+  font-size: 11px;
+  color: var(--hal-gray-500);
+}
+
+.find-a-cruise .find-a-cruise-cta.button {
+  border-color: var(--hal-navy);
+  background: var(--hal-navy);
+  color: #fff;
+  border-radius: 4px;
+  padding: 10px 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.find-a-cruise .find-a-cruise-cta.button:hover,
+.find-a-cruise .find-a-cruise-cta.button:focus-visible {
+  border-color: var(--hal-navy-light);
+  background: var(--hal-navy-light);
+  color: #fff;
+  text-decoration: none;
+}
+
+.find-a-cruise .find-a-cruise-cta-soldout.button {
+  border-color: var(--hal-gray-200);
+  background: var(--hal-gray-200);
+  color: var(--hal-gray-700);
+}
+
+/* Empty + load more */
+.find-a-cruise .find-a-cruise-empty {
+  margin-top: 24px;
+  padding: 48px 24px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid var(--hal-gray-200);
+  border-radius: 4px;
+  color: var(--hal-gray-700);
+}
+
+.find-a-cruise .find-a-cruise-loadmore {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.find-a-cruise .find-a-cruise-loadmore-btn.button {
+  border-color: var(--hal-navy);
+  background: var(--hal-navy);
+  color: #fff;
+  border-radius: 4px;
+  padding: 12px 32px;
+}
+
+.find-a-cruise .find-a-cruise-loadmore-btn.button:hover {
+  border-color: var(--hal-navy-light);
+  background: var(--hal-navy-light);
+}
+
+@media (width >= 900px) {
+  .find-a-cruise .find-a-cruise-card {
+    flex-direction: row;
+  }
+
+  .find-a-cruise .find-a-cruise-card-media {
+    width: 280px;
+    min-height: 220px;
+    flex-shrink: 0;
+  }
+}

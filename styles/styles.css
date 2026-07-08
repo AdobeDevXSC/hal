@@ -38,6 +38,20 @@
   --cta-color: var(--accent-color);
   --cta-hover-color: var(--accent-hover-color);
 
+  /* HAL palette (consumed by cruise-ships / find-a-cruise / hero-search blocks) */
+  --hal-navy: #1d3557;
+  --hal-navy-dark: #0f1f3d;
+  --hal-navy-light: #2a4a7f;
+  --hal-gold: #c9a84c;
+  --hal-blue: #1976d2;
+  --hal-blue-light: #e3f2fd;
+  --hal-gray-100: #f1f3f5;
+  --hal-gray-200: #e9ecef;
+  --hal-gray-300: #dee2e6;
+  --hal-gray-500: #adb5bd;
+  --hal-gray-700: #495057;
+  --hal-gray-900: #212529;
+
   /* fonts */
   --body-font-family: quasimoda, roboto, roboto-fallback, sans-serif;
   --heading-font-family: quasimoda, roboto, roboto-fallback, sans-serif;

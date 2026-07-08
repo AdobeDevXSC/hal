@@ -1,0 +1,159 @@
+.cruise-ships {
+  display: block;
+}
+
+/* Hero banner */
+.cruise-ships .cruise-ships-hero {
+  background: var(--hal-navy);
+  color: #fff;
+  padding: 56px 24px;
+  text-align: center;
+}
+
+.cruise-ships .cruise-ships-hero-heading {
+  color: #fff;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  margin: 0 0 8px;
+}
+
+.cruise-ships .cruise-ships-hero-subheading {
+  margin: 0;
+  color: rgb(255 255 255 / 80%);
+  font-weight: 300;
+}
+
+/* Layout */
+.cruise-ships .cruise-ships-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 16px;
+}
+
+.cruise-ships .cruise-ships-status {
+  text-align: center;
+  color: var(--hal-gray-700);
+}
+
+/* Grid */
+.cruise-ships .cruise-ships-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.cruise-ships .cruise-ships-grid-item {
+  display: flex;
+}
+
+/* Card */
+.cruise-ships .cruise-ships-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--hal-gray-200);
+  border-radius: 4px;
+  background: #fff;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.cruise-ships .cruise-ships-card:hover {
+  box-shadow: 0 8px 20px rgb(0 0 0 / 12%);
+  transform: translateY(-2px);
+}
+
+.cruise-ships .cruise-ships-card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: var(--hal-gray-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cruise-ships .cruise-ships-card-media img,
+.cruise-ships .cruise-ships-card-media picture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cruise-ships .cruise-ships-card-media-placeholder {
+  color: var(--hal-gray-500);
+  font-size: var(--body-font-size-xs);
+  padding: 0 16px;
+  text-align: center;
+}
+
+.cruise-ships .cruise-ships-card-body {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cruise-ships .cruise-ships-card-name {
+  font-size: var(--heading-font-size-s);
+  font-weight: 400;
+  color: var(--hal-navy);
+  margin: 0;
+}
+
+.cruise-ships .cruise-ships-card-class {
+  font-size: var(--body-font-size-xs);
+  color: var(--hal-gray-700);
+  margin: 0 0 8px;
+}
+
+.cruise-ships .cruise-ships-card-link {
+  margin-top: auto;
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  color: var(--hal-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cruise-ships .cruise-ships-card-link::after {
+  content: " ›";
+  font-weight: 400;
+}
+
+.cruise-ships .cruise-ships-card-link:hover,
+.cruise-ships .cruise-ships-card-link:focus-visible {
+  color: var(--hal-navy-light);
+  text-decoration: underline;
+}
+
+/* Empty state */
+.cruise-ships .cruise-ships-empty {
+  padding: 48px 24px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid var(--hal-gray-200);
+  border-radius: 4px;
+  color: var(--hal-gray-700);
+}
+
+@media (width >= 600px) {
+  .cruise-ships .cruise-ships-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .cruise-ships .cruise-ships-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (width >= 1200px) {
+  .cruise-ships .cruise-ships-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
