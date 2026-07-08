@@ -238,7 +238,13 @@
 
 /* search variant: horizontal "find your cruise" style search bar.
    The band background (e.g. navy) is provided at the section/page level,
-   for example via Section Metadata Style "dark". */
+   for example via Section Metadata Style "dark". The block owns its own
+   vertical padding so the pill always has breathing room in the band;
+   horizontal insets come from the section's content column. */
+.form.search {
+  padding: 24px 0;
+}
+
 .form.search form {
   display: flex;
   flex-direction: column;
