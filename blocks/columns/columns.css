@@ -31,3 +31,99 @@
     order: unset;
   }
 }
+
+/*
+ * find-your-cruise variant: renders the columns block as a horizontal promo
+ * banner — image on one side, a light content panel with a pill CTA on the
+ * other — matching the "Around the World" banner on hollandamerica.com/en/us.
+ */
+.find-your-cruise .columns > div {
+  gap: 0;
+  overflow: hidden;
+  background-color: #eaeef4;
+}
+
+.find-your-cruise .columns .columns-img-col {
+  position: relative;
+}
+
+.find-your-cruise .columns .columns-img-col::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgb(2 38 88 / 15%);
+  pointer-events: none;
+}
+
+/* mobile: keep the image's natural aspect ratio to avoid layout shift */
+.find-your-cruise .columns .columns-img-col img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* text/content column (the one that is not the image) */
+.find-your-cruise .columns > div > div:not(.columns-img-col) {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  color: var(--brand-navy);
+}
+
+.find-your-cruise .columns > div > div:not(.columns-img-col) h3 {
+  margin: 0;
+  color: var(--brand-navy);
+  font-size: var(--heading-font-size-m);
+  font-weight: 700;
+}
+
+.find-your-cruise .columns > div > div:not(.columns-img-col) p {
+  margin: 0;
+  color: var(--brand-navy);
+  font-size: var(--body-font-size-s);
+  line-height: 1.5;
+}
+
+/* CTA styled as an accent pill even without authored button formatting */
+.find-your-cruise .columns > div > div:not(.columns-img-col) a:not(.button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin-top: 4px;
+  border-radius: 2.4em;
+  padding: 0.6em 1.4em;
+  background-color: var(--cta-color);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.find-your-cruise .columns > div > div:not(.columns-img-col) a:not(.button):hover,
+.find-your-cruise .columns > div > div:not(.columns-img-col) a:not(.button):focus-visible {
+  background-color: var(--cta-hover-color);
+}
+
+@media (width >= 900px) {
+  .find-your-cruise .columns > div {
+    align-items: stretch;
+    min-height: 220px;
+  }
+
+  .find-your-cruise .columns .columns-img-col {
+    flex: 3;
+  }
+
+  /* desktop: the row has a definite height, so fill it and crop */
+  .find-your-cruise .columns .columns-img-col img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .find-your-cruise .columns > div > div:not(.columns-img-col) {
+    flex: 2;
+    justify-content: center;
+    padding: 32px 40px;
+  }
+}

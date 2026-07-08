@@ -124,14 +124,16 @@ export default async function decorate(block) {
   nav.id = 'nav';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
-  const classes = ['brand', 'sections', 'tools'];
+  // Region classes, in fragment section order:
+  // 1 brand, 2 sections (primary menu), 3 tools (utility), 4 announcement
+  const classes = ['brand', 'sections', 'tools', 'announcement'];
   classes.forEach((c, i) => {
     const section = nav.children[i];
     if (section) section.classList.add(`nav-${c}`);
   });
 
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
+  const brandLink = navBrand?.querySelector('.button');
   if (brandLink) {
     brandLink.className = '';
     brandLink.closest('.button-container').className = '';

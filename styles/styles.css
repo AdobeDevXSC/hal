@@ -11,7 +11,34 @@
  */
 
 :root {
-  /* HAL brand palette (mirrors the Sanity/Storyblok POC tokens) */
+  /* brand palette (Holland America) */
+  --brand-navy: #022658;
+  --brand-navy-dark: #1d2736;
+  --brand-blue: #3860be;
+  --accent-color: #e46c24;
+  --accent-hover-color: #c85a1b;
+
+  /* colors */
+  --background-color: #fff;
+  --light-color: #f8f8f8;
+  --dark-color: #1d2736;
+  --text-color: #1a1a1a;
+  --link-color: #022658;
+  --link-hover-color: #e46c24;
+
+  /* ui tokens */
+  --border-color: #d1d9e6;
+  --overlay-color: rgb(2 38 88 / 75%);
+  --overlay-color-light: rgb(2 38 88 / 35%);
+
+  /* block aliases (hero/cards from poc-adobe-eds) mapped to the brand palette */
+  --nav-bg-color: var(--brand-navy);
+  --nav-bg-hover-color: var(--brand-navy-dark);
+  --nav-text-color: #fff;
+  --cta-color: var(--accent-color);
+  --cta-hover-color: var(--accent-hover-color);
+
+  /* HAL palette (consumed by cruise-ships / find-a-cruise / hero-search blocks) */
   --hal-navy: #1d3557;
   --hal-navy-dark: #0f1f3d;
   --hal-navy-light: #2a4a7f;
@@ -25,30 +52,27 @@
   --hal-gray-700: #495057;
   --hal-gray-900: #212529;
 
-  /* colors (semantic tokens consumed by blocks, mapped to HAL palette) */
-  --background-color: white;
-  --light-color: var(--hal-gray-100);
-  --dark-color: var(--hal-gray-700);
-  --text-color: var(--hal-gray-900);
-  --link-color: var(--hal-navy);
-  --link-hover-color: var(--hal-navy-light);
-
   /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  --body-font-family: quasimoda, roboto, roboto-fallback, sans-serif;
+  --heading-font-family: quasimoda, roboto, roboto-fallback, sans-serif;
+  --display-font-family: "minion-3-display", georgia, "times new roman", serif;
+
+  /* nav font — matches hollandamerica.com; upgrades to quasimoda once the
+     Adobe Fonts kit <link> is added to head.html (see placeholder there) */
+  --nav-font: quasimoda, var(--body-font-family);
 
   /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
+  --body-font-size-m: 18px;
+  --body-font-size-s: 16px;
+  --body-font-size-xs: 14px;
 
-  /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
+  /* heading sizes (mobile-first) */
+  --heading-font-size-xxl: 32px;
+  --heading-font-size-xl: 26px;
+  --heading-font-size-l: 22px;
+  --heading-font-size-m: 20px;
+  --heading-font-size-s: 18px;
+  --heading-font-size-xs: 16px;
 
   /* nav height */
   --nav-height: 64px;
@@ -75,12 +99,12 @@
     --body-font-size-xs: 14px;
 
     /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
+    --heading-font-size-xxl: 40px;
+    --heading-font-size-xl: 30px;
+    --heading-font-size-l: 24px;
+    --heading-font-size-m: 20px;
+    --heading-font-size-s: 18px;
+    --heading-font-size-xs: 16px;
   }
 }
 
@@ -91,7 +115,7 @@ body {
   color: var(--text-color);
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 body.appear {
@@ -126,8 +150,18 @@ h6 {
   scroll-margin: 40px;
 }
 
-h1 { font-size: var(--heading-font-size-xxl); }
-h2 { font-size: var(--heading-font-size-xl); }
+h1 {
+  font-size: var(--heading-font-size-xxl);
+  font-family: var(--display-font-family);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: var(--heading-font-size-xl);
+  font-weight: 700;
+}
 h3 { font-size: var(--heading-font-size-l); }
 h4 { font-size: var(--heading-font-size-m); }
 h5 { font-size: var(--heading-font-size-s); }
@@ -268,17 +302,19 @@ button.button.secondary:disabled:focus-visible {
 /* high-impact call-to-action */
 a.button.accent,
 button.button.accent {
-  border-color: var(--link-color);
-  background-color: var(--link-color);
-  color: var(--background-color);
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: #fff;
+  font-weight: 700;
 }
 
 a.button.accent:hover,
 a.button.accent:focus-visible,
 button.button.accent:hover,
 button.button.accent:focus-visible {
-  border-color: var(--link-hover-color);
-  background-color: var(--link-hover-color);
+  border-color: var(--accent-hover-color);
+  background-color: var(--accent-hover-color);
+  color: #fff;
 }
 
 a.button.accent[aria-disabled="true"],
@@ -321,7 +357,7 @@ main > .section > div {
 }
 
 main > .section:first-of-type {
-  margin-top: 0;
+  margin-top: 38px;
 }
 
 @media (width >= 900px) {
@@ -336,4 +372,52 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
+}
+
+/* dark brand sections */
+main .section.dark {
+  background-color: var(--brand-navy);
+  color: #fff;
+  margin: 0;
+  padding: 40px 0;
+}
+
+main .section.dark h1,
+main .section.dark h2,
+main .section.dark h3,
+main .section.dark h4,
+main .section.dark h5,
+main .section.dark h6 {
+  color: #fff;
+}
+
+main .section.dark a:not(.button) {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* find-your-cruise: navy promo section with a banner-style columns block */
+main .section.find-your-cruise {
+  background-color: var(--brand-navy);
+  color: #fff;
+  margin: 0;
+  padding: 40px 0;
+}
+
+main .section.find-your-cruise .default-content-wrapper h2 {
+  margin: 0 0 24px;
+  color: #fff;
+  font-family: var(--display-font-family);
+  font-weight: 400;
+  text-align: center;
+}
+
+@media (width >= 900px) {
+  main .section.find-your-cruise {
+    padding: 56px 0;
+  }
+
+  main .section.find-your-cruise .default-content-wrapper h2 {
+    margin-bottom: 32px;
+  }
 }

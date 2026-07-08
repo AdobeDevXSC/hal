@@ -1,0 +1,32 @@
+# This file describes a Fastly Compute package. To learn more visit:
+# https://www.fastly.com/documentation/reference/compute/fastly-toml
+
+authors = []
+cloned_from = "https://github.com/fastly/compute-starter-kit-javascript-empty"
+description = "hal AEM Edge Functions"
+language = "javascript"
+manifest_version = 3
+name = "hal-edge-functions"
+service_id = ""
+
+[scripts]
+  build = "npm run build"
+  post_init = "npm install"
+
+[local_server]
+  [local_server.backends]
+    # DEV ONLY: fetch the page shell from local `aem up` so local template/CSS
+    # changes show at :7676. Prod/preview use edgeFunctions.yaml (eds-prod/eds-preview).
+    [local_server.backends.eds-local]
+      url = "http://localhost:3000"
+
+  [local_server.config_stores]
+    [local_server.config_stores.config_default]
+      format = "inline-toml"
+    [local_server.config_stores.config_default.contents]
+      LOG_LEVEL = "debug"
+
+  [local_server.secret_stores]
+    [[local_server.secret_stores.secret_default]]
+      key = "API_TOKEN"
+      data = "helloworld"

@@ -5,33 +5,114 @@
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero picture {
+/* Media (image or video) */
+.hero .hero-media {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  z-index: 0;
 }
 
-.hero img {
-  object-fit: cover;
+.hero .hero-media img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+
+/*
+ * video layers over the poster image, fills the hero, and fades in once it is
+ * playing (the <video> element itself carries the .hero-media class, so it is
+ * sized here rather than via a descendant selector)
+ */
+.hero .hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.hero .hero-video.is-playing {
+  opacity: 1;
+}
+
+/* Overlay gradient */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--overlay-color) 0%, var(--overlay-color-light) 100%);
+  z-index: 1;
+}
+
+/*
+ * video variant: the video (and its poster) is a self-contained creative with
+ * its own headline and CTA, so drop the darkening gradient (and the overlaid
+ * text, below) and let the media show edge-to-edge.
+ */
+.hero.video::after {
+  content: none;
+}
+
+/* Content */
+.hero .hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+  text-align: center;
+}
+
+.hero .hero-content h1 {
+  color: #fff;
+  font-family: var(--display-font-family);
+  text-shadow: 0 2px 8px rgb(0 0 0 / 40%);
+  margin-bottom: 16px;
+}
+
+.hero .hero-content p {
+  color: #fff;
+  font-size: var(--body-font-size-m);
+  text-shadow: 0 1px 4px rgb(0 0 0 / 30%);
+}
+
+.hero .hero-content .button-wrapper a.button {
+  background-color: var(--cta-color);
+  border-color: var(--cta-color);
+  color: #fff;
+  font-weight: 700;
+  text-shadow: none;
+  padding: 12px 32px;
+  font-size: var(--body-font-size-s);
+}
+
+.hero .hero-content .button-wrapper a.button:hover,
+.hero .hero-content .button-wrapper a.button:focus-visible {
+  background-color: var(--cta-hover-color);
+  border-color: var(--cta-hover-color);
 }
 
 @media (width >= 900px) {
   .hero {
-    padding: 40px 32px;
+    min-height: 600px;
   }
+
+  .hero .hero-content {
+    padding: 0 32px 80px;
+  }
+}
+
+/* video variant: hide the overlaid text (see gradient note above) */
+.hero.video .hero-content {
+  display: none;
 }
