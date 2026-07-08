@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holland America Line — EDS Getting Started</title>
+<meta name="description" content="Developer guide for the Holland America Line website on Adobe Experience Manager Edge Delivery Services.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Spectrum tokens */
+    --spectrum-blue-900: #0d66d0;
+    --spectrum-blue-1000: #095aba;
+    --spectrum-blue-1300: #003ea8;
+    --spectrum-gray-50: #ffffff;
+    --spectrum-gray-75: #fafafa;
+    --spectrum-gray-100: #f5f5f5;
+    --spectrum-gray-200: #eaeaea;
+    --spectrum-gray-300: #e1e1e1;
+    --spectrum-gray-400: #cacaca;
+    --spectrum-gray-500: #b3b3b3;
+    --spectrum-gray-600: #8e8e8e;
+    --spectrum-gray-700: #6e6e6e;
+    --spectrum-gray-800: #4b4b4b;
+    --spectrum-gray-900: #2c2c2c;
+    --spectrum-red-700: #d31510;
+    --spectrum-orange-700: #da7b11;
+    --spectrum-green-700: #268e6c;
+    --spectrum-purple-700: #7240ab;
+    --spectrum-seafoam-700: #16878c;
+
+    /* Holland America brand accents */
+    --hal-navy: #022658;
+    --hal-navy-dark: #1d2736;
+    --hal-blue: #3860be;
+    --hal-orange: #e46c24;
+
+    --spectrum-font: 'adobe-clean', -apple-system, BlinkMacSystemFont, 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+    --spectrum-mono: 'Source Code Pro', 'Fira Mono', 'Courier New', monospace;
+    --sidebar-width: 240px;
+    --content-max: 860px;
+    --header-h: 56px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--spectrum-font);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--spectrum-gray-900);
+    background: var(--spectrum-gray-50);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ── TOP NAV ── */
+  .topnav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    background: var(--hal-navy);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 16px;
+    z-index: 100;
+    box-shadow: 0 1px 0 rgb(0 0 0 / 15%);
+  }
+  .topnav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .topnav-logo svg { flex-shrink: 0; }
+  .topnav-divider {
+    width: 1px;
+    height: 20px;
+    background: rgb(255 255 255 / 25%);
+  }
+  .topnav-title {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .topnav-badge {
+    margin-left: auto;
+    background: var(--hal-orange);
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    letter-spacing: 0.04em;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: flex;
+    margin-top: var(--header-h);
+    min-height: calc(100vh - var(--header-h));
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-width);
+    flex-shrink: 0;
+    position: sticky;
+    top: var(--header-h);
+    height: calc(100vh - var(--header-h));
+    overflow-y: auto;
+    border-right: 1px solid var(--spectrum-gray-200);
+    background: var(--spectrum-gray-75);
+    padding: 24px 0 40px;
+  }
+  .sidebar-section { margin-bottom: 8px; }
+  .sidebar-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--spectrum-gray-600);
+    padding: 8px 20px 4px;
+  }
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 20px;
+    font-size: 13px;
+    color: var(--spectrum-gray-800);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: background 0.1s, color 0.1s, border-color 0.1s;
+  }
+  .sidebar-link:hover {
+    background: var(--spectrum-gray-200);
+    color: var(--spectrum-gray-900);
+  }
+  .sidebar-link.active {
+    background: #e9f1fc;
+    color: var(--spectrum-blue-900);
+    border-left-color: var(--spectrum-blue-900);
+    font-weight: 700;
+  }
+  .sidebar-link .icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+  .sidebar-link.active .icon { opacity: 1; }
+
+  /* ── MAIN ── */
+  .main {
+    flex: 1;
+    min-width: 0;
+    padding: 48px 56px 80px;
+  }
+  .main-inner { max-width: var(--content-max); }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--spectrum-gray-200);
+    margin-bottom: 48px;
+  }
+  .page-hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--hal-orange);
+    margin-bottom: 8px;
+  }
+  .page-hero h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--spectrum-gray-900);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .page-hero-sub {
+    font-size: 16px;
+    color: var(--spectrum-gray-700);
+    max-width: 620px;
+    line-height: 1.5;
+  }
+
+  /* ── SECTIONS ── */
+  .doc-section {
+    margin-bottom: 56px;
+    scroll-margin-top: calc(var(--header-h) + 24px);
+  }
+  .doc-section h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--spectrum-gray-900);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-rule {
+    height: 1px;
+    background: var(--spectrum-gray-200);
+    margin: 12px 0 24px;
+  }
+  .doc-section h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--spectrum-gray-900);
+    margin: 24px 0 8px;
+  }
+  .doc-section p {
+    font-size: 14px;
+    color: var(--spectrum-gray-800);
+    margin-bottom: 12px;
+    line-height: 1.65;
+  }
+  .doc-section ul { margin: 4px 0 12px 20px; }
+  .doc-section li { font-size: 14px; color: var(--spectrum-gray-800); margin-bottom: 4px; }
+
+  /* ── SECTION ICON BADGE ── */
+  .section-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .icon-blue   { background: #e9f1fc; color: var(--spectrum-blue-900); }
+  .icon-red    { background: #fff0ee; color: var(--spectrum-red-700); }
+  .icon-green  { background: #eaf6f1; color: var(--spectrum-green-700); }
+  .icon-purple { background: #f3edfb; color: var(--spectrum-purple-700); }
+  .icon-seafoam{ background: #e6f4f4; color: var(--spectrum-seafoam-700); }
+  .icon-orange { background: #fff4e5; color: var(--spectrum-orange-700); }
+
+  /* ── URL CARDS ── */
+  .url-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .url-card {
+    background: var(--spectrum-gray-50);
+    border: 1px solid var(--spectrum-gray-200);
+    border-radius: 8px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  a.url-card:hover {
+    border-color: var(--spectrum-blue-900);
+    box-shadow: 0 0 0 1px var(--spectrum-blue-900);
+  }
+  .url-card-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--spectrum-gray-600);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .url-card-label .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-blue    { background: var(--spectrum-blue-900); }
+  .dot-navy    { background: var(--hal-navy); }
+  .dot-orange  { background: var(--hal-orange); }
+  .dot-green   { background: var(--spectrum-green-700); }
+  .dot-purple  { background: var(--spectrum-purple-700); }
+  .url-card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--spectrum-gray-900);
+  }
+  .url-card-url {
+    font-size: 12px;
+    font-family: var(--spectrum-mono);
+    color: var(--spectrum-blue-900);
+    word-break: break-all;
+  }
+  .url-card-desc {
+    font-size: 12px;
+    color: var(--spectrum-gray-600);
+    margin-top: 2px;
+  }
+
+  /* ── STEPS ── */
+  .steps {
+    counter-reset: step;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 30px;
+    bottom: 30px;
+    width: 1px;
+    background: var(--spectrum-gray-300);
+  }
+  .step {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 24px;
+    position: relative;
+  }
+  .step:last-child { padding-bottom: 0; }
+  .step-num {
+    counter-increment: step;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--spectrum-blue-900);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .step-num::before { content: counter(step); }
+  .step-body { padding-top: 5px; flex: 1; }
+  .step-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--spectrum-gray-900);
+    margin-bottom: 6px;
+  }
+  .step-body p { font-size: 13px; color: var(--spectrum-gray-700); margin-bottom: 8px; }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: var(--spectrum-gray-900);
+    color: #d4d4d4;
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-family: var(--spectrum-mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 8px 0 4px;
+    position: relative;
+    white-space: pre;
+  }
+  .code-block .cmt  { color: #6a9955; }
+  .code-block .str  { color: #ce9178; }
+  .code-block .kw   { color: #569cd6; }
+  .code-block .var  { color: #9cdcfe; }
+  .code-inline {
+    font-family: var(--spectrum-mono);
+    font-size: 12px;
+    background: var(--spectrum-gray-100);
+    border: 1px solid var(--spectrum-gray-300);
+    color: var(--spectrum-gray-900);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  /* ── INFO / NOTE BLOCKS ── */
+  .notice {
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 16px 0;
+    font-size: 13px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+  .notice-icon { flex-shrink: 0; margin-top: 1px; }
+  .notice.info    { background: #e9f1fc; color: #0d51b5; border-left: 3px solid var(--spectrum-blue-900); }
+  .notice.tip     { background: #eaf6f1; color: #1a6b50; border-left: 3px solid var(--spectrum-green-700); }
+  .notice.warning { background: #fff4e5; color: #8a4b08; border-left: 3px solid var(--spectrum-orange-700); }
+  .notice a { color: inherit; font-weight: 700; }
+
+  /* ── SKILLS / CARDS GRID ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .skill-card {
+    background: var(--spectrum-gray-50);
+    border: 1px solid var(--spectrum-gray-200);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .skill-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .skill-tag {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 7px;
+    border-radius: 10px;
+  }
+  .tag-js  { background: #fff8d6; color: #8a5e00; }
+  .tag-css { background: #e9f1fc; color: #0d51b5; }
+  .tag-da  { background: #f3edfb; color: #5b2d99; }
+  .skill-card-name { font-size: 13px; font-weight: 700; color: var(--spectrum-gray-900); }
+  .skill-card-desc { font-size: 12px; color: var(--spectrum-gray-600); line-height: 1.5; }
+
+  /* ── ARCHITECTURE DIAGRAM ── */
+  .arch-diagram {
+    border: 1px solid var(--spectrum-gray-200);
+    border-radius: 8px;
+    padding: 24px;
+    background: var(--spectrum-gray-75);
+    margin: 16px 0;
+  }
+  .arch-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .arch-node {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    min-width: 100px;
+  }
+  .arch-arrow { font-size: 18px; color: var(--spectrum-gray-400); }
+
+  /* ── TABLE ── */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0;
+  }
+  .spec-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--spectrum-gray-600);
+    padding: 8px 12px;
+    border-bottom: 2px solid var(--spectrum-gray-200);
+    background: var(--spectrum-gray-75);
+  }
+  .spec-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--spectrum-gray-200);
+    color: var(--spectrum-gray-800);
+    vertical-align: top;
+  }
+  .spec-table tr:last-child td { border-bottom: none; }
+  .spec-table td:first-child { font-weight: 700; color: var(--spectrum-gray-900); }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    border-top: 1px solid var(--spectrum-gray-200);
+    margin-top: 40px;
+    padding-top: 20px;
+    font-size: 12px;
+    color: var(--spectrum-gray-500);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main { padding: 24px 20px 60px; }
+    .page-hero h1 { font-size: 24px; }
+    .url-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <a class="topnav-logo" href="#overview" aria-label="Holland America Line">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="none">
+      <circle cx="12" cy="12" r="11" stroke="#fff" stroke-width="1.5"/>
+      <path d="M8 8v8M8 12h8M16 8v8" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </a>
+  <div class="topnav-divider"></div>
+  <span class="topnav-title">Holland America Line — AEM Edge Delivery Services</span>
+  <span class="topnav-badge">Dev Guide</span>
+</nav>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" aria-label="Page navigation">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Overview</div>
+      <a class="sidebar-link active" href="#overview">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h5v5H2zm7 0h5v5H9zM2 9h5v5H2zm7 0h5v5H9z"/></svg>
+        The initiative
+      </a>
+      <a class="sidebar-link" href="#urls">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
+        Key URLs
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Where things live</div>
+      <a class="sidebar-link" href="#github">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Find the GitHub repo
+      </a>
+      <a class="sidebar-link" href="#da">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path d="M11.013 1.427a1.75 1.75 0 012.474 0l1.086 1.086a1.75 1.75 0 010 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 00-.064.108l-.558 1.953 1.953-.558a.253.253 0 00.108-.064l6.286-6.286z"/></svg>
+        Find the DA folder
+      </a>
+      <a class="sidebar-link" href="#architecture">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M1 2.5A1.5 1.5 0 012.5 1h3A1.5 1.5 0 017 2.5v3A1.5 1.5 0 015.5 7h-3A1.5 1.5 0 011 5.5v-3zm8 0A1.5 1.5 0 0110.5 1h3A1.5 1.5 0 0115 2.5v3A1.5 1.5 0 0113.5 7h-3A1.5 1.5 0 019 5.5v-3zm-8 8A1.5 1.5 0 012.5 9h3A1.5 1.5 0 017 10.5v3A1.5 1.5 0 015.5 15h-3A1.5 1.5 0 011 13.5v-3zm8 0A1.5 1.5 0 0110.5 9h3a1.5 1.5 0 011.5 1.5v3a1.5 1.5 0 01-1.5 1.5h-3A1.5 1.5 0 019 13.5v-3z"/></svg>
+        Architecture
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Build</div>
+      <a class="sidebar-link" href="#local-dev">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0114.25 14H1.75A1.75 1.75 0 010 12.25v-8.5zm1.75-.25a.25.25 0 00-.25.25v.5h13v-.5a.25.25 0 00-.25-.25H1.75zM1.5 5.5v6.75c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25V5.5h-13z"/></svg>
+        Local development
+      </a>
+      <a class="sidebar-link" href="#blocks">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1 3.5A1.5 1.5 0 012.5 2h2A1.5 1.5 0 016 3.5v2A1.5 1.5 0 014.5 7h-2A1.5 1.5 0 011 5.5v-2zm5.5 0A1.5 1.5 0 018 2h2a1.5 1.5 0 011.5 1.5v2A1.5 1.5 0 0110 7H8A1.5 1.5 0 016.5 5.5v-2zm-5.5 5A1.5 1.5 0 012.5 7h2A1.5 1.5 0 016 8.5v2A1.5 1.5 0 014.5 12h-2A1.5 1.5 0 011 10.5v-2zm5.5 0A1.5 1.5 0 018 7h2a1.5 1.5 0 011.5 1.5v2A1.5 1.5 0 0110 12H8A1.5 1.5 0 016.5 10.5v-2z"/></svg>
+        Blocks reference
+      </a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <div class="main-inner">
+
+      <!-- PAGE HERO -->
+      <div class="page-hero" id="overview">
+        <div class="page-hero-eyebrow">AEM Edge Delivery Services</div>
+        <h1>Holland America Line — Getting Started</h1>
+        <p class="page-hero-sub">A developer &amp; author guide for the Holland America Line website built on Adobe Experience Manager Edge Delivery Services. Learn what the project is, where the code and content live, and how to get running locally.</p>
+      </div>
+
+      <!-- THE INITIATIVE -->
+      <section class="doc-section">
+        <h2>
+          <span class="section-icon icon-blue">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M1 3.5A1.5 1.5 0 012.5 2h2A1.5 1.5 0 016 3.5v2A1.5 1.5 0 014.5 7h-2A1.5 1.5 0 011 5.5v-2zm5.5 0A1.5 1.5 0 018 2h2a1.5 1.5 0 011.5 1.5v2A1.5 1.5 0 0110 7H8A1.5 1.5 0 016.5 5.5v-2zm-5.5 5A1.5 1.5 0 012.5 7h2A1.5 1.5 0 016 8.5v2A1.5 1.5 0 014.5 12h-2A1.5 1.5 0 011 10.5v-2zm5.5 0A1.5 1.5 0 018 7h2a1.5 1.5 0 011.5 1.5v2A1.5 1.5 0 0110 12H8A1.5 1.5 0 016.5 10.5v-2z"/></svg>
+          </span>
+          The initiative
+        </h2>
+        <div class="section-rule"></div>
+        <p>This project delivers the <strong>Holland America Line</strong> web experience on <strong>Adobe Experience Manager Edge Delivery Services (EDS)</strong>. It is built from the <a href="https://github.com/adobe/aem-boilerplate/" target="_blank" rel="noopener">AEM boilerplate</a> and follows Adobe's standards for fast, easy-to-author, and maintainable web experiences.</p>
+        <p>Content is authored in <strong>Document Authoring (DA)</strong> and served through the EDS pipeline. The codebase carries the Holland America brand system — navy, orange, and the Quasimoda / Minion display typefaces — applied through global styles and a library of reusable blocks. Adobe Edge Functions have been set up as a baseline for request-time customization at the CDN edge.</p>
+
+        <div class="skills-grid" style="margin-top:20px;">
+          <div class="skill-card">
+            <div class="skill-card-header"><span class="skill-tag tag-css">GOAL</span><span class="skill-card-name">Fast by default</span></div>
+            <p class="skill-card-desc">Vanilla JS, modern CSS, no build step. Three-phase (eager / lazy / delayed) page loading targets a 100 Lighthouse score.</p>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-header"><span class="skill-tag tag-da">CONTENT</span><span class="skill-card-name">Author in DA</span></div>
+            <p class="skill-card-desc">Authors edit pages in Document Authoring; blocks decorate the content authors produce — no code deploy required to publish.</p>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-header"><span class="skill-tag tag-js">BRAND</span><span class="skill-card-name">Holland America look</span></div>
+            <p class="skill-card-desc">Brand tokens (navy #022658, orange #e46c24, Quasimoda + Minion) drive global styles, the header, hero, and cards.</p>
+          </div>
+        </div>
+
+        <table class="spec-table" style="margin-top:16px;">
+          <thead><tr><th>Attribute</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>GitHub org</td><td><code class="code-inline">AdobeDevXSC</code></td></tr>
+            <tr><td>Repository</td><td><code class="code-inline">hal</code></td></tr>
+            <tr><td>Primary branch</td><td><code class="code-inline">main</code></td></tr>
+            <tr><td>Content system</td><td>Document Authoring (DA) via <code class="code-inline">da.live</code></td></tr>
+            <tr><td>Content mount</td><td><code class="code-inline">content.da.live/AdobeDevXSC/hal/</code></td></tr>
+            <tr><td>Base boilerplate</td><td>adobe/aem-boilerplate</td></tr>
+            <tr><td>Extras</td><td>Adobe Edge Functions baseline</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- KEY URLS -->
+      <section class="doc-section" id="urls">
+        <h2>
+          <span class="section-icon icon-seafoam">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"/></svg>
+          </span>
+          Key URLs
+        </h2>
+        <div class="section-rule"></div>
+        <p>Every place you need to reach the code, the content, and the rendered site.</p>
+        <div class="url-grid">
+          <a class="url-card" href="https://github.com/AdobeDevXSC/hal" target="_blank" rel="noopener">
+            <div class="url-card-label"><span class="dot dot-navy"></span>GitHub</div>
+            <div class="url-card-title">hal repository</div>
+            <div class="url-card-url">github.com/AdobeDevXSC/hal</div>
+            <div class="url-card-desc">Code, branches, pull requests, Actions CI</div>
+          </a>
+          <a class="url-card" href="https://da.live/#/AdobeDevXSC/hal" target="_blank" rel="noopener">
+            <div class="url-card-label"><span class="dot dot-orange"></span>Document Authoring</div>
+            <div class="url-card-title">hal content folder</div>
+            <div class="url-card-url">da.live/#/AdobeDevXSC/hal</div>
+            <div class="url-card-desc">Pages, nav, footer, metadata sheets</div>
+          </a>
+          <a class="url-card" href="https://main--hal--AdobeDevXSC.aem.page" target="_blank" rel="noopener">
+            <div class="url-card-label"><span class="dot dot-blue"></span>Preview</div>
+            <div class="url-card-title">main--hal--AdobeDevXSC.aem.page</div>
+            <div class="url-card-url">main--hal--AdobeDevXSC.aem.page</div>
+            <div class="url-card-desc">Renders DA content against the main branch code</div>
+          </a>
+          <a class="url-card" href="https://main--hal--AdobeDevXSC.aem.live" target="_blank" rel="noopener">
+            <div class="url-card-label"><span class="dot dot-green"></span>Live</div>
+            <div class="url-card-title">main--hal--AdobeDevXSC.aem.live</div>
+            <div class="url-card-url">main--hal--AdobeDevXSC.aem.live</div>
+            <div class="url-card-desc">Production CDN — published content only</div>
+          </a>
+        </div>
+        <div class="notice info">
+          <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
+          <span>The URL pattern for any branch is <code class="code-inline">{branch}--hal--AdobeDevXSC.aem.page</code> (preview) or <code class="code-inline">.aem.live</code> (published). Swap <code class="code-inline">main</code> for your feature branch to preview it.</span>
+        </div>
+      </section>
+
+      <!-- FIND THE GITHUB REPO -->
+      <section class="doc-section" id="github">
+        <h2>
+          <span class="section-icon icon-purple">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          </span>
+          Find the GitHub repository
+        </h2>
+        <div class="section-rule"></div>
+        <p>All of the site's code lives in one repository under the <strong>AdobeDevXSC</strong> GitHub organization.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Go straight to the repo</div>
+              <p>Open <a href="https://github.com/AdobeDevXSC/hal" target="_blank" rel="noopener">github.com/AdobeDevXSC/hal</a>. If you have access it opens directly; otherwise request access to the <code class="code-inline">AdobeDevXSC</code> org.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Or discover it from the org</div>
+              <p>Visit <a href="https://github.com/AdobeDevXSC" target="_blank" rel="noopener">github.com/AdobeDevXSC</a>, open the <strong>Repositories</strong> tab, and search for <code class="code-inline">hal</code>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Confirm it from a local clone</div>
+              <p>If you already have the code, run <code class="code-inline">git remote -v</code> (or <code class="code-inline">gh repo view --json nameWithOwner</code>) — it reports <code class="code-inline">AdobeDevXSC/hal</code>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Clone it</div>
+              <div class="code-block"><span class="kw">git</span> clone https://github.com/AdobeDevXSC/hal.git
+<span class="kw">cd</span> hal</div>
+            </div>
+          </div>
+        </div>
+        <div class="notice tip">
+          <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L7 8.94 5.28 7.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l4.25-4.25z"/></svg>
+          <span>The GitHub org (<code class="code-inline">AdobeDevXSC</code>) and repo name (<code class="code-inline">hal</code>) are the two values you plug into every preview and live URL.</span>
+        </div>
+      </section>
+
+      <!-- FIND THE DA FOLDER -->
+      <section class="doc-section" id="da">
+        <h2>
+          <span class="section-icon icon-orange">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M11.013 1.427a1.75 1.75 0 012.474 0l1.086 1.086a1.75 1.75 0 010 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 00-.064.108l-.558 1.953 1.953-.558a.253.253 0 00.108-.064l6.286-6.286z"/></svg>
+          </span>
+          Find the DA content folder
+        </h2>
+        <div class="section-rule"></div>
+        <p>Page content is authored in <strong>Document Authoring (DA)</strong>, not in the repo. The repo's <code class="code-inline">fstab.yaml</code> tells you exactly which DA folder feeds this site.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Read the mount point in fstab.yaml</div>
+              <p>At the repo root, <code class="code-inline">fstab.yaml</code> declares where content comes from:</p>
+              <div class="code-block"><span class="kw">mountpoints:</span>
+  <span class="var">/</span>:
+    <span class="var">url</span>: <span class="str">https://content.da.live/AdobeDevXSC/hal/</span>
+    <span class="var">type</span>: markup</div>
+              <p>The path after <code class="code-inline">content.da.live/</code> is the DA org and folder: <strong>AdobeDevXSC / hal</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Open it in the DA editor</div>
+              <p>Translate that mount into the DA app URL by swapping <code class="code-inline">content.da.live/</code> for <code class="code-inline">da.live/#/</code>:</p>
+              <div class="code-block">https://da.live/#/AdobeDevXSC/hal</div>
+              <p>Open <a href="https://da.live/#/AdobeDevXSC/hal" target="_blank" rel="noopener">da.live/#/AdobeDevXSC/hal</a> to browse and edit pages, nav, footer, and metadata.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Verify the content is being served</div>
+              <p>Any page you preview at <code class="code-inline">main--hal--AdobeDevXSC.aem.page</code> is pulled from that DA folder. Inspect the raw content of a page with:</p>
+              <div class="code-block"><span class="kw">curl</span> https://main--hal--AdobeDevXSC.aem.page/index.plain.html</div>
+            </div>
+          </div>
+        </div>
+        <div class="notice info">
+          <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
+          <span>Rule of thumb: the DA folder path always mirrors <code class="code-inline">{org}/{repo}</code>. Here that is <code class="code-inline">AdobeDevXSC/hal</code> — the same org and name as GitHub.</span>
+        </div>
+      </section>
+
+      <!-- ARCHITECTURE -->
+      <section class="doc-section" id="architecture">
+        <h2>
+          <span class="section-icon icon-green">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M1 2.5A1.5 1.5 0 012.5 1h3A1.5 1.5 0 017 2.5v3A1.5 1.5 0 015.5 7h-3A1.5 1.5 0 011 5.5v-2zm8 0A1.5 1.5 0 0110.5 1h3A1.5 1.5 0 0115 2.5v3A1.5 1.5 0 0113.5 7h-3A1.5 1.5 0 019 5.5v-2zm-8 8A1.5 1.5 0 012.5 9h3A1.5 1.5 0 017 10.5v3A1.5 1.5 0 015.5 15h-3A1.5 1.5 0 011 13.5v-3zm8 0A1.5 1.5 0 0110.5 9h3a1.5 1.5 0 011.5 1.5v3a1.5 1.5 0 01-1.5 1.5h-3A1.5 1.5 0 019 13.5v-3z"/></svg>
+          </span>
+          Architecture
+        </h2>
+        <div class="section-rule"></div>
+        <p>Content authored in DA and code from GitHub are combined by the EDS pipeline and served through preview and live CDN environments.</p>
+        <div class="arch-diagram">
+          <div class="arch-row">
+            <div class="arch-node" style="background:#fff4e5;color:#8a4b08;">DA content<br><span style="font-weight:400;font-size:11px;">AdobeDevXSC/hal</span></div>
+            <div class="arch-arrow">+</div>
+            <div class="arch-node" style="background:#e9f1fc;color:#0d51b5;">GitHub code<br><span style="font-weight:400;font-size:11px;">AdobeDevXSC/hal</span></div>
+          </div>
+          <div class="arch-row" style="margin:4px 0;"><div class="arch-arrow" style="font-size:22px;">↓</div></div>
+          <div class="arch-row">
+            <div class="arch-node" style="background:#f5f5f5;color:#2c2c2c;min-width:220px;">EDS pipeline<br><span style="font-weight:400;font-size:11px;">+ Adobe Edge Functions</span></div>
+          </div>
+          <div class="arch-row" style="margin:4px 0;"><div class="arch-arrow" style="font-size:22px;">↓</div></div>
+          <div class="arch-row">
+            <div class="arch-node" style="background:#eaf6f1;color:#1a6b50;">*.aem.page (preview)</div>
+            <div class="arch-arrow">|</div>
+            <div class="arch-node" style="background:#eaf6f1;color:#1a6b50;">*.aem.live (published)</div>
+          </div>
+        </div>
+        <h3>Repository structure</h3>
+        <div class="code-block"><span class="cmt"># Key directories</span>
+/blocks              <span class="cmt"># reusable content blocks (blockname.js + blockname.css)</span>
+/scripts             <span class="cmt"># aem.js · scripts.js · delayed.js</span>
+/styles              <span class="cmt"># styles.css · lazy-styles.css · fonts.css (HAL brand tokens)</span>
+/fonts               <span class="cmt"># web fonts (Quasimoda, Minion display)</span>
+/icons               <span class="cmt"># SVG icons</span>
+/config              <span class="cmt"># cdn.yaml · edgeFunctions.yaml</span>
+/aem-edge-functions  <span class="cmt"># Adobe Edge Functions baseline</span>
+fstab.yaml           <span class="cmt"># DA content mount → content.da.live/AdobeDevXSC/hal/</span>
+head.html            <span class="cmt"># global &lt;head&gt; content</span></div>
+      </section>
+
+      <!-- LOCAL DEVELOPMENT -->
+      <section class="doc-section" id="local-dev">
+        <h2>
+          <span class="section-icon icon-blue">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0114.25 14H1.75A1.75 1.75 0 010 12.25v-8.5zm1.75-.25a.25.25 0 00-.25.25v.5h13v-.5a.25.25 0 00-.25-.25H1.75zM1.5 5.5v6.75c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25V5.5h-13z"/></svg>
+          </span>
+          Local development
+        </h2>
+        <div class="section-rule"></div>
+        <p>The AEM CLI proxies your local code against previewed DA content. You edit code locally and see it against real content at <code class="code-inline">localhost:3000</code>.</p>
+        <div class="code-block"><span class="cmt"># 1. Install dependencies</span>
+npm install
+
+<span class="cmt"># 2. Install the AEM CLI (once, globally)</span>
+npm install -g @adobe/aem-cli
+
+<span class="cmt"># 3. Start the local dev server at http://localhost:3000</span>
+aem up
+
+<span class="cmt"># Lint before committing</span>
+npm run lint</div>
+        <div class="notice warning">
+          <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM8 5a.75.75 0 00-.75.75v2.5a.75.75 0 001.5 0v-2.5A.75.75 0 008 5zm1 6a1 1 0 11-2 0 1 1 0 012 0z"/></svg>
+          <span>Never modify <code class="code-inline">scripts/aem.js</code> — it is the core EDS library. Add site logic in <code class="code-inline">scripts.js</code>, block files, or global styles instead.</span>
+        </div>
+      </section>
+
+      <!-- BLOCKS REFERENCE -->
+      <section class="doc-section" id="blocks">
+        <h2>
+          <span class="section-icon icon-purple">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M1 3.5A1.5 1.5 0 012.5 2h2A1.5 1.5 0 016 3.5v2A1.5 1.5 0 014.5 7h-2A1.5 1.5 0 011 5.5v-2zm5.5 0A1.5 1.5 0 018 2h2a1.5 1.5 0 011.5 1.5v2A1.5 1.5 0 0110 7H8A1.5 1.5 0 016.5 5.5v-2zm-5.5 5A1.5 1.5 0 012.5 7h2A1.5 1.5 0 016 8.5v2A1.5 1.5 0 014.5 12h-2A1.5 1.5 0 011 10.5v-2zm5.5 0A1.5 1.5 0 018 7h2a1.5 1.5 0 011.5 1.5v2A1.5 1.5 0 0110 12H8A1.5 1.5 0 016.5 10.5v-2z"/></svg>
+          </span>
+          Blocks reference
+        </h2>
+        <div class="section-rule"></div>
+        <p>Blocks are the reusable building blocks that add styling and behavior to authored content. Each lives in <code class="code-inline">/blocks/{name}/</code> as a <code class="code-inline">{name}.js</code> + <code class="code-inline">{name}.css</code> pair. The project currently ships these blocks:</p>
+        <div class="skills-grid">
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">header</span></div><p class="skill-card-desc">Site navigation, styled to match the Holland America Line brand.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">footer</span></div><p class="skill-card-desc">Global footer authored from a DA fragment.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">hero</span></div><p class="skill-card-desc">Branded hero with imagery and headline, imported from poc-adobe-eds.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">cards</span></div><p class="skill-card-desc">Responsive card grid using the brand palette.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">carousel</span></div><p class="skill-card-desc">Rotating slides for featured content.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">columns</span></div><p class="skill-card-desc">Multi-column layout for mixed content.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">accordion</span></div><p class="skill-card-desc">Expandable/collapsible content sections.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">tabs</span></div><p class="skill-card-desc">Tabbed content panels.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">table</span></div><p class="skill-card-desc">Structured tabular content.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">quote</span></div><p class="skill-card-desc">Pull quotes and testimonials.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">embed</span></div><p class="skill-card-desc">Third-party embeds (video, social, etc.).</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">video</span></div><p class="skill-card-desc">Inline and modal video playback.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">modal</span></div><p class="skill-card-desc">Overlay dialogs triggered from content.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">form</span></div><p class="skill-card-desc">Author-configurable forms.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">search</span></div><p class="skill-card-desc">On-site search experience.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">fragment</span></div><p class="skill-card-desc">Reuse content authored elsewhere in DA.</p></div>
+        </div>
+        <div class="notice tip" style="margin-top:20px;">
+          <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L7 8.94 5.28 7.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l4.25-4.25z"/></svg>
+          <span>Coding standards, block conventions, and the publishing workflow live in <a href="https://github.com/AdobeDevXSC/hal/blob/main/AGENTS.md" target="_blank" rel="noopener">AGENTS.md</a> at the repository root.</span>
+        </div>
+      </section>
+
+      <div class="doc-footer">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="#b3b3b3"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg>
+        AdobeDevXSC / hal &nbsp;·&nbsp; Holland America Line on AEM Edge Delivery Services
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  const links = document.querySelectorAll('.sidebar-link');
+  const sections = document.querySelectorAll('.doc-section[id], .page-hero[id]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const { id } = entry.target;
+        links.forEach((l) => {
+          l.classList.toggle('active', l.getAttribute('href') === `#${id}`);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach((s) => observer.observe(s));
+</script>
+</body>
+</html>
