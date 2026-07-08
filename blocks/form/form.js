@@ -657,6 +657,18 @@ export default function decorate(block) {
             const form = buildForm(data, submit);
             block.replaceChildren(form);
             block.removeAttribute('style');
+            // search variant has no submit endpoint yet; preview the query for now
+            if (block.classList.contains('search') && !submit) {
+              form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const payload = generatePayload(form);
+                const summary = Object.entries(payload)
+                  .map(([key, value]) => `${key}: ${value || '(any)'}`)
+                  .join('\n');
+                // eslint-disable-next-line no-alert
+                window.alert(`Find Your Cruise\n\n${summary}`);
+              });
+            }
           } catch (error) {
             // eslint-disable-next-line no-console
             console.error('Could not build form from', source, error);
