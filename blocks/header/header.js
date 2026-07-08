@@ -125,8 +125,8 @@ export default async function decorate(block) {
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
   // Region classes, in fragment section order:
-  // 1 brand, 2 sections (primary menu), 3 tools (utility), 4 announcement, 5 search
-  const classes = ['brand', 'sections', 'tools', 'announcement', 'search'];
+  // 1 brand, 2 sections (primary menu), 3 tools (utility), 4 announcement
+  const classes = ['brand', 'sections', 'tools', 'announcement'];
   classes.forEach((c, i) => {
     const section = nav.children[i];
     if (section) section.classList.add(`nav-${c}`);
