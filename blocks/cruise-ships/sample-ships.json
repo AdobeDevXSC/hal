@@ -1,0 +1,103 @@
+{
+  "ships": [
+    {
+      "id": "eurodam",
+      "name": "Eurodam",
+      "shipCode": "ED",
+      "shipClass": "Signature Class",
+      "image": "",
+      "imageAlt": "Eurodam at sea",
+      "detailPath": "/en/us/cruise-ships/eurodam"
+    },
+    {
+      "id": "koningsdam",
+      "name": "Koningsdam",
+      "shipCode": "KD",
+      "shipClass": "Pinnacle Class",
+      "image": "",
+      "imageAlt": "Koningsdam at sea",
+      "detailPath": "/en/us/cruise-ships/koningsdam"
+    },
+    {
+      "id": "nieuw-amsterdam",
+      "name": "Nieuw Amsterdam",
+      "shipCode": "NA",
+      "shipClass": "Signature Class",
+      "image": "",
+      "imageAlt": "Nieuw Amsterdam at sea",
+      "detailPath": "/en/us/cruise-ships/nieuw-amsterdam"
+    },
+    {
+      "id": "nieuw-statendam",
+      "name": "Nieuw Statendam",
+      "shipCode": "NS",
+      "shipClass": "Pinnacle Class",
+      "image": "",
+      "imageAlt": "Nieuw Statendam at sea",
+      "detailPath": "/en/us/cruise-ships/nieuw-statendam"
+    },
+    {
+      "id": "noordam",
+      "name": "Noordam",
+      "shipCode": "NO",
+      "shipClass": "Vista Class",
+      "image": "",
+      "imageAlt": "Noordam at sea",
+      "detailPath": "/en/us/cruise-ships/noordam"
+    },
+    {
+      "id": "oosterdam",
+      "name": "Oosterdam",
+      "shipCode": "OS",
+      "shipClass": "Vista Class",
+      "image": "",
+      "imageAlt": "Oosterdam at sea",
+      "detailPath": "/en/us/cruise-ships/oosterdam"
+    },
+    {
+      "id": "rotterdam",
+      "name": "Rotterdam",
+      "shipCode": "RN",
+      "shipClass": "Pinnacle Class",
+      "image": "",
+      "imageAlt": "Rotterdam at sea",
+      "detailPath": "/en/us/cruise-ships/rotterdam"
+    },
+    {
+      "id": "volendam",
+      "name": "Volendam",
+      "shipCode": "VL",
+      "shipClass": "R Class",
+      "image": "",
+      "imageAlt": "Volendam at sea",
+      "detailPath": "/en/us/cruise-ships/volendam"
+    },
+    {
+      "id": "westerdam",
+      "name": "Westerdam",
+      "shipCode": "WE",
+      "shipClass": "Vista Class",
+      "image": "",
+      "imageAlt": "Westerdam at sea",
+      "detailPath": "/en/us/cruise-ships/westerdam"
+    },
+    {
+      "id": "zaandam",
+      "name": "Zaandam",
+      "shipCode": "ZD",
+      "shipClass": "R Class",
+      "image": "",
+      "imageAlt": "Zaandam at sea",
+      "detailPath": "/en/us/cruise-ships/zaandam"
+    },
+    {
+      "id": "zuiderdam",
+      "name": "Zuiderdam",
+      "shipCode": "ZU",
+      "shipClass": "Vista Class",
+      "image": "",
+      "imageAlt": "Zuiderdam at sea",
+      "detailPath": "/en/us/cruise-ships/zuiderdam"
+    }
+  ]
+}

@@ -293,6 +293,37 @@
     ]
   },
   {
+    "id": "cruise-ships",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heroHeading",
+        "label": "Hero Heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heroSubheading",
+        "label": "Hero Subheading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "endpoint",
+        "label": "Ship Feed URL",
+        "description": "Optional. Overrides the bundled sample feed. Point at the real ship feed or a CORS-enabled proxy."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "detailBase",
+        "label": "Ship Detail Base Path",
+        "description": "Base path for the ‘See Ship Details’ links (default /en/us/cruise-ships)."
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
