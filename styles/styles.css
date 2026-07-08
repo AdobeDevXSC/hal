@@ -377,3 +377,29 @@ main .section.dark a:not(.button) {
   color: #fff;
   text-decoration: underline;
 }
+
+/* find-your-cruise: navy promo section with a banner-style columns block */
+main .section.find-your-cruise {
+  background-color: var(--brand-navy);
+  color: #fff;
+  margin: 0;
+  padding: 40px 0;
+}
+
+main .section.find-your-cruise .default-content-wrapper h2 {
+  margin: 0 0 24px;
+  color: #fff;
+  font-family: var(--display-font-family);
+  font-weight: 400;
+  text-align: center;
+}
+
+@media (width >= 900px) {
+  main .section.find-your-cruise {
+    padding: 56px 0;
+  }
+
+  main .section.find-your-cruise .default-content-wrapper h2 {
+    margin-bottom: 32px;
+  }
+}
