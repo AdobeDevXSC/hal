@@ -51,6 +51,15 @@
   z-index: 1;
 }
 
+/*
+ * video variant: the video (and its poster) is a self-contained creative with
+ * its own headline and CTA, so drop the darkening gradient (and the overlaid
+ * text, below) and let the media show edge-to-edge.
+ */
+.hero.video::after {
+  content: none;
+}
+
 /* Content */
 .hero .hero-content {
   position: absolute;
@@ -101,4 +110,9 @@
   .hero .hero-content {
     padding: 0 32px 80px;
   }
+}
+
+/* video variant: hide the overlaid text (see gradient note above) */
+.hero.video .hero-content {
+  display: none;
 }
