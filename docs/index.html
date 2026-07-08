@@ -563,6 +563,13 @@
         Blocks reference
       </a>
     </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Localization</div>
+      <a class="sidebar-link" href="#translation">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2.75 1.5a.75.75 0 000 1.5h3.03c-.32 1.55-1.02 2.98-2 4.16a8.9 8.9 0 01-.98-1.56.75.75 0 00-1.37.6c.28.65.65 1.28 1.1 1.86-.6.56-1.28 1.02-2.02 1.36a.75.75 0 00.62 1.37 8.7 8.7 0 002.4-1.63c.5.5 1.05.94 1.64 1.32a.75.75 0 00.82-1.26 8.2 8.2 0 01-1.36-1.1c1.2-1.44 2.03-3.2 2.38-5.08h1.14a.75.75 0 000-1.5H5.5V.75a.75.75 0 00-1.5 0V1.5H2.75zm7.53 4.5a.75.75 0 01.7.48l3 8a.75.75 0 11-1.4.53l-.72-1.92H8.44l-.72 1.92a.75.75 0 11-1.4-.53l3-8a.75.75 0 01.7-.48h.26zm-.13 2.62L9 11.1h2.3l-1.05-2.48z"/></svg>
+        Translation &amp; localization
+      </a>
+    </div>
   </nav>
 
   <!-- MAIN CONTENT -->
@@ -851,6 +858,80 @@ npm run lint</div>
         <div class="notice tip" style="margin-top:20px;">
           <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L7 8.94 5.28 7.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l4.25-4.25z"/></svg>
           <span>Coding standards, block conventions, and the publishing workflow live in <a href="https://github.com/AdobeDevXSC/hal/blob/main/AGENTS.md" target="_blank" rel="noopener">AGENTS.md</a> at the repository root.</span>
+        </div>
+      </section>
+
+      <!-- TRANSLATION & LOCALIZATION -->
+      <section class="doc-section" id="translation">
+        <h2>
+          <span class="section-icon icon-seafoam">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M2.75 1.5a.75.75 0 000 1.5h3.03c-.32 1.55-1.02 2.98-2 4.16a8.9 8.9 0 01-.98-1.56.75.75 0 00-1.37.6c.28.65.65 1.28 1.1 1.86-.6.56-1.28 1.02-2.02 1.36a.75.75 0 00.62 1.37 8.7 8.7 0 002.4-1.63c.5.5 1.05.94 1.64 1.32a.75.75 0 00.82-1.26 8.2 8.2 0 01-1.36-1.1c1.2-1.44 2.03-3.2 2.38-5.08h1.14a.75.75 0 000-1.5H5.5V.75a.75.75 0 00-1.5 0V1.5H2.75zm7.53 4.5a.75.75 0 01.7.48l3 8a.75.75 0 11-1.4.53l-.72-1.92H8.44l-.72 1.92a.75.75 0 11-1.4-.53l3-8a.75.75 0 01.7-.48h.26zm-.13 2.62L9 11.1h2.3l-1.05-2.48z"/></svg>
+          </span>
+          Translation &amp; localization
+        </h2>
+        <div class="section-rule"></div>
+        <p>Document Authoring ships with a built-in <strong>Translate</strong> app for producing localized versions of pages. Before translating, decide on a localization strategy (which languages, and whether locales are variants of a source or independent). Translation behavior is controlled by a small config sheet in the site's hidden <code class="code-inline">.da</code> configuration folder.</p>
+        <div class="notice info">
+          <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
+          <span>Full reference: <a href="https://docs.da.live/administrators/guides/setup-translation" target="_blank" rel="noopener">docs.da.live — Set up translation</a>. Setup requires DA administrator access.</span>
+        </div>
+
+        <h3>Configure translation for this site</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Open the hidden config folder</div>
+              <p>Append <code class="code-inline">/.da</code> to the site path in DA to reach the configuration folder:</p>
+              <div class="code-block">https://da.live/#/AdobeDevXSC/hal/.da</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Set up the sheets</div>
+              <p>Inside <code class="code-inline">.da</code>, create a new sheet named <code class="code-inline">translate</code>, and rename the default <code class="code-inline">data</code> sheet to <code class="code-inline">config</code>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Add key/value headers</div>
+              <p>On the <code class="code-inline">config</code> sheet, make the first row a two-column structure with headers <code class="code-inline">key</code> and <code class="code-inline">value</code>. Add one row per option below.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Set the translation options</div>
+              <table class="spec-table">
+                <thead><tr><th>key</th><th>value</th><th>What it does</th></tr></thead>
+                <tbody>
+                  <tr><td>translate.behavior</td><td><code class="code-inline">overwrite</code> · <code class="code-inline">merge</code></td><td>How returned content is applied. <strong>Overwrite</strong> replaces old content (no-touch translation); <strong>merge</strong> keeps existing content you want to retain.</td></tr>
+                  <tr><td>translate.staging</td><td><code class="code-inline">on</code> · <code class="code-inline">off</code></td><td><strong>On</strong> copies the source to a separate folder before translating; <strong>off</strong> sends it directly to the translation service.</td></tr>
+                  <tr><td>rollout.behavior</td><td><code class="code-inline">overwrite</code> · <code class="code-inline">merge</code></td><td>Same overwrite/merge choice, applied to hybrid and locale-based rollout strategies.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Publish the config</div>
+              <p>Click <strong>Publish</strong> and confirm to activate the settings.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num"></div>
+            <div class="step-body">
+              <div class="step-title">Create a translation project</div>
+              <p>Open the <strong>Translate</strong> app and create a new project. Your configured options now appear in the project's confirmation dialog.</p>
+            </div>
+          </div>
+        </div>
+        <div class="notice tip">
+          <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L7 8.94 5.28 7.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l4.25-4.25z"/></svg>
+          <span>Choose <strong>merge</strong> when localized pages carry market-specific content you don't want a re-translation to clobber; choose <strong>overwrite</strong> for fully automated, no-touch translation.</span>
         </div>
       </section>
 
