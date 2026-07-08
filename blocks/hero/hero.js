@@ -1,107 +1,142 @@
 /**
- * Hero Block — supports both image and video backgrounds (full width).
+ * Hero Block
  *
- * Authoring structure:
- * Row 1: image OR video (as link, plain URL text, or <video> element)
- * Row 2+: heading, subtext, CTA
+ * Default: a full-width background image with overlaid heading, subtext and CTA.
  *
- * Supported video formats:
- * - A link to .mp4 file: <a href="video.mp4">...</a>
- * - Plain text URL ending in .mp4
- * - A link with youtube.com or vimeo.com
- * - An already-rendered <video> element
+ * `video` variant (authored as "Hero (video)"): the authored image becomes the
+ * LCP poster and an authored video URL (.mp4/.webm) is layered on top as a
+ * muted, looping, autoplay backdrop. To protect LCP the video is only loaded
+ * after the page has finished loading, and it is skipped entirely when the user
+ * prefers reduced motion or autoplay is blocked — the poster image remains.
  *
- * @param {Element} block The block element
+ * Authoring (video variant), a single cell:
+ *   image (poster)
+ *   video URL (.mp4 or .webm, as a link or plain text)
+ *   heading / subtext / CTA
  */
-export default async function decorate(block) {
-  const rows = [...block.children];
-  if (rows.length === 0) return;
 
-  const firstRow = rows[0];
-  let mediaEl;
-  // original node that becomes the media, so we can exclude it from the text content
-  let mediaSource;
+const VIDEO_URL_RE = /^https?:\/\/\S+\.(mp4|webm)(\?\S*)?$/i;
 
-  // Detect video/image source anywhere in the block (media may share a row with text)
-  const videoEl = block.querySelector('video');
-  const videoLink = block.querySelector('a[href$=".mp4"], a[href$=".webm"], a[href*="youtube"], a[href*="youtu.be"], a[href*="vimeo"]');
-  const picture = block.querySelector('picture');
+/**
+ * Layers a muted, looping, autoplay video over the poster image. The video is
+ * only revealed once it is actually playing, and removed if autoplay is blocked
+ * so the poster image stays visible.
+ * @param {Element} block The hero block
+ * @param {string} url The video source URL
+ */
+function loadHeroVideo(block, url) {
+  const [, ext] = url.match(/\.(mp4|webm)/i);
+  const video = document.createElement('video');
+  video.className = 'hero-media hero-video';
+  video.muted = true;
+  video.loop = true;
+  video.autoplay = true;
+  video.playsInline = true;
+  video.setAttribute('muted', '');
+  video.setAttribute('loop', '');
+  video.setAttribute('autoplay', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('preload', 'auto');
+  video.setAttribute('aria-hidden', 'true');
+  video.tabIndex = -1;
 
-  // Check for plain text URL (no <a> tag, just pasted URL text)
-  let plainVideoUrl = null;
-  if (!videoEl && !videoLink && !picture) {
-    const text = firstRow.textContent.trim();
-    if (text.match(/https?:\/\/.*\.(mp4|webm)/i)) {
-      plainVideoUrl = text;
-    } else if (text.match(/https?:\/\/.*(youtube|youtu\.be|vimeo)/i)) {
-      plainVideoUrl = text;
-    }
+  const source = document.createElement('source');
+  source.src = url;
+  source.type = `video/${ext.toLowerCase()}`;
+  video.append(source);
+
+  // reveal only once it is genuinely playing, so we never flash a black frame
+  video.addEventListener('playing', () => video.classList.add('is-playing'), { once: true });
+
+  // insert above the poster image but below the overlay/content
+  block.insertBefore(video, block.querySelector('.hero-content'));
+
+  const playPromise = video.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    // autoplay blocked (e.g. some mobile / data-saver contexts): keep the poster
+    playPromise.catch(() => video.remove());
   }
+}
 
-  if (videoEl) {
-    // Already a <video> element — use it directly
-    mediaSource = videoEl;
-    mediaEl = videoEl.cloneNode(true);
-    mediaEl.setAttribute('autoplay', '');
-    mediaEl.setAttribute('muted', '');
-    mediaEl.setAttribute('loop', '');
-    mediaEl.setAttribute('playsinline', '');
-    mediaEl.className = 'hero-media hero-video';
-  } else if (videoLink || plainVideoUrl) {
-    mediaSource = videoLink || firstRow;
-    const videoUrl = videoLink ? videoLink.href : plainVideoUrl;
+/**
+ * Whether the video backdrop should load. It is a heavy autoplay asset, so it
+ * is limited to larger viewports on capable connections and skipped for
+ * reduced-motion or data-saver users. In those cases the poster image remains,
+ * which also keeps it as the LCP element on constrained (mobile) connections.
+ * @returns {boolean}
+ */
+function shouldLoadHeroVideo() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+  if (!window.matchMedia('(min-width: 900px)').matches) return false;
+  const conn = navigator.connection;
+  if (conn && (conn.saveData || ['slow-2g', '2g', '3g'].includes(conn.effectiveType))) {
+    return false;
+  }
+  return true;
+}
 
-    if (videoUrl.match(/\.(mp4|webm)(\?|$)/i)) {
-      // Direct video file
-      const ext = videoUrl.match(/\.(mp4|webm)/i)[1];
-      mediaEl = document.createElement('video');
-      mediaEl.setAttribute('autoplay', '');
-      mediaEl.setAttribute('muted', '');
-      mediaEl.setAttribute('loop', '');
-      mediaEl.setAttribute('playsinline', '');
-      mediaEl.innerHTML = `<source src="${videoUrl}" type="video/${ext}">`;
-      mediaEl.className = 'hero-media hero-video';
-    } else if (videoUrl.match(/youtube|youtu\.be/i)) {
-      // YouTube embed
-      let embedUrl = videoUrl;
-      const ytMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
-      if (ytMatch) {
-        embedUrl = `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&playlist=${ytMatch[1]}`;
-      }
-      mediaEl = document.createElement('div');
-      mediaEl.className = 'hero-media hero-video hero-video-embed';
-      mediaEl.innerHTML = `<iframe src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>`;
-    } else if (videoUrl.match(/vimeo/i)) {
-      // Vimeo embed
-      const vimeoMatch = videoUrl.match(/vimeo\.com\/(\d+)/);
-      const vimeoId = vimeoMatch ? vimeoMatch[1] : '';
-      mediaEl = document.createElement('div');
-      mediaEl.className = 'hero-media hero-video hero-video-embed';
-      mediaEl.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&muted=1&loop=1&background=1" frameborder="0" allow="autoplay" loading="lazy"></iframe>`;
-    }
-  } else if (picture) {
-    // Image fallback
-    mediaSource = picture;
+/**
+ * loads and decorates the hero
+ * @param {Element} block The hero block element
+ */
+export default function decorate(block) {
+  const isVideo = block.classList.contains('video');
+
+  // Poster / background image — this is the LCP element.
+  const picture = block.querySelector('picture');
+  let mediaEl;
+  if (picture) {
     mediaEl = picture.cloneNode(true);
     mediaEl.className = 'hero-media';
+    const img = mediaEl.querySelector('img');
+    if (img) {
+      img.setAttribute('loading', 'eager');
+      img.setAttribute('fetchpriority', 'high');
+    }
   }
 
-  // Extract text content from all rows, excluding whatever became the media.
-  // Supports media in its own row (multi-row authoring) or sharing a row with
-  // the heading/text/CTA (single-row authoring).
+  // Video source is honored only in the video variant.
+  let videoUrl = null;
+  let videoSource = null; // authored node to exclude from the text content
+  if (isVideo) {
+    const link = block.querySelector('a[href$=".mp4"], a[href$=".webm"]');
+    if (link) {
+      videoUrl = link.href;
+      videoSource = link;
+    } else {
+      const urlPara = [...block.querySelectorAll('p')]
+        .find((p) => VIDEO_URL_RE.test(p.textContent.trim()));
+      if (urlPara) {
+        videoUrl = urlPara.textContent.trim();
+        videoSource = urlPara;
+      }
+    }
+  }
+
+  // Collect the remaining content (heading, subtext, CTA), excluding the media.
   const contentEl = document.createElement('div');
   contentEl.className = 'hero-content';
-
-  rows.forEach((row) => {
+  [...block.children].forEach((row) => {
     const inner = row.querySelector(':scope > div') || row;
     [...inner.children].forEach((child) => {
-      if (mediaSource && (child === mediaSource || child.contains(mediaSource))) return;
+      if (picture && (child === picture || child.contains(picture))) return;
+      if (videoSource && (child === videoSource || child.contains(videoSource))) return;
       contentEl.append(child.cloneNode(true));
     });
   });
 
-  // Rebuild block
+  // Rebuild the block: poster image first, then overlaid content.
   block.textContent = '';
   if (mediaEl) block.append(mediaEl);
   block.append(contentEl);
+
+  // Defer the video until after LCP, and only under capable conditions.
+  if (videoUrl && shouldLoadHeroVideo()) {
+    const start = () => loadHeroVideo(block, videoUrl);
+    if (document.readyState === 'complete') {
+      start();
+    } else {
+      window.addEventListener('load', start, { once: true });
+    }
+  }
 }
