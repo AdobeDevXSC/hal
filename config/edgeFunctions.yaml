@@ -1,0 +1,19 @@
+kind: "EdgeFunctions"
+version: "1"
+data:
+  functions:
+    - name: hal-edge-function
+      # Restrict outbound fetches to these hosts (pair with
+      # enforceExplicitBackends() in code for SSRF hardening). These are hal's
+      # Edge Delivery preview/prod hosts the function proxies to.
+      origins:
+        - name: eds-prod
+          domain: main--hal--adobedevxsc.aem.live
+        - name: eds-preview
+          domain: main--hal--adobedevxsc.aem.page
+  # Add secrets here when the handler needs them, e.g.:
+  #   secrets:
+  #     - key: SOME_KEY
+  #       value: ${{SOME_KEY_SECRET}}   # define the underlying secret in Cloud Manager first
+  # Enable later to cache responses at the edge (kv_default).
+  # kvs: true

@@ -1,0 +1,21 @@
+kind: 'CDN'
+version: '1'
+data:
+  originSelectors:
+    rules:
+      # Route /en/find-a-cruise/<id> to the edge function. Excludes
+      # /en/find-a-cruise/default — that's the folder-mapped shell the function
+      # fetches, so excluding it is the loop guard (and lets /default serve the
+      # template). originName = `edgefunction-` + the function name in
+      # edgeFunctions.yaml (hal-edge-function).
+      - name: route-find-a-cruise-to-edge-function
+        when:
+          allOf:
+            - reqProperty: path
+              matches: "^/en/find-a-cruise/[^/]+$"
+            - reqProperty: path
+              doesNotEqual: "/en/find-a-cruise/default"
+        action:
+          type: selectAemOrigin
+          originName: edgefunction-hal-edge-function
+          skipCache: true
