@@ -31,6 +31,10 @@
   --body-font-family: roboto, roboto-fallback, sans-serif;
   --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
 
+  /* nav font — matches hollandamerica.com; upgrades to quasimoda once the
+     Adobe Fonts kit <link> is added to head.html (see placeholder there) */
+  --nav-font: quasimoda, var(--body-font-family);
+
   /* body sizes */
   --body-font-size-m: 22px;
   --body-font-size-s: 19px;
