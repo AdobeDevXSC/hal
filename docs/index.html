@@ -905,13 +905,13 @@ npm run lint</div>
           Translation &amp; localization
         </h2>
         <div class="section-rule"></div>
-        <p>Document Authoring ships with a built-in <strong>Translate</strong> app for producing localized versions of pages. Before translating, decide on a localization strategy (which languages, and whether locales are variants of a source or independent). Translation behavior is controlled by a small config sheet in the site's hidden <code class="code-inline">.da</code> configuration folder.</p>
+        <p>Document Authoring ships with a built-in <strong>Translate</strong> app for producing localized versions of pages. Behavior is driven by a <strong><code class="code-inline">translate.json</code></strong> config — a multi-sheet workbook in the site's hidden <code class="code-inline">.da</code> configuration folder. DA seeds a sensible <a href="https://docs.da.live/administrators/reference/translation-configs/default/translate.json" target="_blank" rel="noopener">default <code class="code-inline">translate.json</code></a>; copy it into this site and adjust the languages and rules for HAL.</p>
         <div class="notice info">
           <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
-          <span>Full reference: <a href="https://docs.da.live/administrators/guides/setup-translation" target="_blank" rel="noopener">docs.da.live — Set up translation</a>. Setup requires DA administrator access.</span>
+          <span>References: <a href="https://docs.da.live/administrators/guides/setup-translation" target="_blank" rel="noopener">Set up translation</a> (guide) and the <a href="https://docs.da.live/administrators/reference/translation-configs/default/translate.json" target="_blank" rel="noopener">default translate.json</a> (config reference). Setup requires DA administrator access.</span>
         </div>
 
-        <h3>Configure translation for this site</h3>
+        <h3>Set it up</h3>
         <div class="steps">
           <div class="step">
             <div class="step-num"></div>
@@ -924,49 +924,77 @@ npm run lint</div>
           <div class="step">
             <div class="step-num"></div>
             <div class="step-body">
-              <div class="step-title">Set up the sheets</div>
-              <p>Inside <code class="code-inline">.da</code>, create a new sheet named <code class="code-inline">translate</code>, and rename the default <code class="code-inline">data</code> sheet to <code class="code-inline">config</code>.</p>
+              <div class="step-title">Add the translate.json config</div>
+              <p>Create a <code class="code-inline">translate.json</code> multi-sheet workbook seeded from the DA default. It carries five sheets: <code class="code-inline">config</code>, <code class="code-inline">languages</code>, <code class="code-inline">custom-doc-rules</code>, <code class="code-inline">dnt-content-rules</code>, and <code class="code-inline">dnt-sheet-rules</code> (documented below).</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num"></div>
             <div class="step-body">
-              <div class="step-title">Add key/value headers</div>
-              <p>On the <code class="code-inline">config</code> sheet, make the first row a two-column structure with headers <code class="code-inline">key</code> and <code class="code-inline">value</code>. Add one row per option below.</p>
+              <div class="step-title">Tune the sheets for HAL</div>
+              <p>Edit the <code class="code-inline">config</code> conflict behaviors, prune the <code class="code-inline">languages</code> list to the locales HAL ships, and add any brand terms / URL patterns to the do-not-translate rules.</p>
             </div>
           </div>
           <div class="step">
             <div class="step-num"></div>
             <div class="step-body">
-              <div class="step-title">Set the translation options</div>
-              <table class="spec-table">
-                <thead><tr><th>key</th><th>value</th><th>What it does</th></tr></thead>
-                <tbody>
-                  <tr><td>translate.behavior</td><td><code class="code-inline">overwrite</code> · <code class="code-inline">merge</code></td><td>How returned content is applied. <strong>Overwrite</strong> replaces old content (no-touch translation); <strong>merge</strong> keeps existing content you want to retain.</td></tr>
-                  <tr><td>translate.staging</td><td><code class="code-inline">on</code> · <code class="code-inline">off</code></td><td><strong>On</strong> copies the source to a separate folder before translating; <strong>off</strong> sends it directly to the translation service.</td></tr>
-                  <tr><td>rollout.behavior</td><td><code class="code-inline">overwrite</code> · <code class="code-inline">merge</code></td><td>Same overwrite/merge choice, applied to hybrid and locale-based rollout strategies.</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num"></div>
-            <div class="step-body">
-              <div class="step-title">Publish the config</div>
-              <p>Click <strong>Publish</strong> and confirm to activate the settings.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num"></div>
-            <div class="step-body">
-              <div class="step-title">Create a translation project</div>
-              <p>Open the <strong>Translate</strong> app and create a new project. Your configured options now appear in the project's confirmation dialog.</p>
+              <div class="step-title">Publish, then create a project</div>
+              <p>Publish the config, then open the <strong>Translate</strong> app and create a new project — your settings appear in the project's confirmation options.</p>
             </div>
           </div>
         </div>
+
+        <h3>The default <code class="code-inline">translate.json</code></h3>
+        <p>The reference config is a <code class="code-inline">:type: multi-sheet</code> workbook. Each sheet below maps directly to the default DA ships.</p>
+
+        <h3>config — service &amp; conflict behavior</h3>
+        <table class="spec-table">
+          <thead><tr><th>key</th><th>default value</th><th>What it controls</th></tr></thead>
+          <tbody>
+            <tr><td>sync.conflict.behavior</td><td><code class="code-inline">overwrite, merge</code></td><td>Old content when it is pulled into the "send for translation" folder.</td></tr>
+            <tr><td>translate.conflict.behavior</td><td><code class="code-inline">overwrite, merge</code></td><td>Old content when new content returns from translation.</td></tr>
+            <tr><td>rollout.conflict.behavior</td><td><code class="code-inline">overwrite, merge</code></td><td>Old content when new content is rolled out to the locale.</td></tr>
+            <tr><td>copy.conflict.behavior</td><td><code class="code-inline">overwrite, merge</code></td><td>When source content is copied into a region.</td></tr>
+            <tr><td>translation.service.name</td><td><code class="code-inline">Google</code></td><td>The translation service.</td></tr>
+            <tr><td>translation.service.all.env</td><td><code class="code-inline">prod</code></td><td>Order of service endpoints; the first is the default.</td></tr>
+            <tr><td>translation.service.prod.link</td><td><code class="code-inline">cloud.google.com/translate/docs/overview</code></td><td>Service documentation link.</td></tr>
+            <tr><td>translation.service.prod.origin</td><td><code class="code-inline">https://translate.da.live/google</code></td><td>Service endpoint origin.</td></tr>
+          </tbody>
+        </table>
         <div class="notice tip">
           <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L7 8.94 5.28 7.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l4.25-4.25z"/></svg>
-          <span>Choose <strong>merge</strong> when localized pages carry market-specific content you don't want a re-translation to clobber; choose <strong>overwrite</strong> for fully automated, no-touch translation.</span>
+          <span>The <code class="code-inline">*.conflict.behavior</code> values list the choices; pick <strong>merge</strong> when localized pages carry market-specific content you don't want re-translation to clobber, and <strong>overwrite</strong> for fully automated, no-touch translation.</span>
+        </div>
+
+        <h3>languages — locales &amp; path convention</h3>
+        <p>Each language maps to a URL <code class="code-inline">location</code> (the locale folder). The default ships seven; keep only what HAL needs.</p>
+        <table class="spec-table">
+          <thead><tr><th>name</th><th>code</th><th>location</th><th>translate type</th><th>actions</th></tr></thead>
+          <tbody>
+            <tr><td>English</td><td><code class="code-inline">en</code></td><td><code class="code-inline">/en</code></td><td>Machine Translation</td><td>Skip, Translate</td></tr>
+            <tr><td>German</td><td><code class="code-inline">de</code></td><td><code class="code-inline">/de</code></td><td>Machine Translation</td><td>Skip, Translate</td></tr>
+            <tr><td>French</td><td><code class="code-inline">fr</code></td><td><code class="code-inline">/fr</code></td><td>Machine Translation</td><td>Skip, Translate</td></tr>
+            <tr><td>Spanish</td><td><code class="code-inline">es</code></td><td><code class="code-inline">/es</code></td><td>Machine Translation</td><td>Skip, Translate</td></tr>
+            <tr><td>Chinese</td><td><code class="code-inline">zh</code></td><td><code class="code-inline">/zh</code></td><td>Machine Translation</td><td>Skip, Translate</td></tr>
+            <tr><td>Japanese</td><td><code class="code-inline">ja</code></td><td><code class="code-inline">/ja</code></td><td>Machine Translation</td><td>Skip, Translate</td></tr>
+            <tr><td>Hindi</td><td><code class="code-inline">hi</code></td><td><code class="code-inline">/hi</code></td><td>Machine Translation</td><td>Skip, Translate</td></tr>
+          </tbody>
+        </table>
+
+        <h3>rules — what not to translate</h3>
+        <p>Three rule sheets keep structural and brand content intact:</p>
+        <table class="spec-table">
+          <thead><tr><th>sheet</th><th>entry</th><th>effect</th></tr></thead>
+          <tbody>
+            <tr><td>custom-doc-rules</td><td><code class="code-inline">metadata</code></td><td>Translate column 2 only when column 1 is <code class="code-inline">title</code> or <code class="code-inline">description</code>.</td></tr>
+            <tr><td>custom-doc-rules</td><td><code class="code-inline">section-metadata</code></td><td>Do not translate.</td></tr>
+            <tr><td>dnt-content-rules</td><td><code class="code-inline">"do not translate me"</code></td><td>Literal content strings left untranslated.</td></tr>
+            <tr><td>dnt-sheet-rules</td><td><code class="code-inline">beginsWith(http:// || https://)</code></td><td>Action <code class="code-inline">dnt</code> — leave URLs untouched in sheets.</td></tr>
+          </tbody>
+        </table>
+        <div class="notice info">
+          <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
+          <span>Add HAL-specific do-not-translate entries — brand names (e.g. "Holland America Line", ship names like "Koningsdam"), trademarked phrases, and campaign slugs — to <code class="code-inline">dnt-content-rules</code> so machine translation leaves them intact.</span>
         </div>
       </section>
 
