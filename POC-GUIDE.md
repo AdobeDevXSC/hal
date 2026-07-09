@@ -1,63 +1,31 @@
-# HAL × Adobe EDS / DA.live — Authoring POC Guide
+# HAL × Adobe EDS / DA.live — Native Authoring POC Guide
 
-**Start here.** This repo (`hal`, from `AdobeDevXSC/hal`) hosts a two-track proof-of-concept
-answering one question: **can we reuse HAL's `@hal-sbn-root/shared-ui` design system with
-Adobe Edge Delivery Services (EDS), authored in DA.live (Document Authoring)?**
+**Start here.** This repo (`hal`, from `AdobeDevXSC/hal`) is a proof-of-concept answering one question:
+**can we reuse HAL's `@hal-sbn-root/shared-ui` design system inside Adobe Edge Delivery Services (EDS)** —
+where authors compose pages in **DA.live** (Document Authoring), **Adobe's edge renders the page**, and
+authors can **drag / rearrange** our components?
 
-Two tracks, one design system:
+Answer so far: **yes** — our shared-ui components run as **React islands** inside vanilla EDS blocks.
 
-| Track | Who renders the page | Lives in | Status |
-|-------|----------------------|----------|--------|
-| **A — Headless** | our Next.js app | `frontend/` | ✅ end-to-end, live |
-| **B — Native (EDS-rendered)** | Adobe's edge | `blocks/`, `build/`, `component-*.json` | ✅ system built; drag-drop = last mile |
-
-Two docs, two purposes:
-- **`frontend/public/aem-eds-pipeline.html`** — the *visual* explainer (concepts, diagrams,
-  the naming taxonomy, headless-vs-native comparison). Open it in a browser.
-- **This file** — the *code-level* map: which file does what, and where the interesting bits are.
+> A prior track — **headless** (a Next.js app that fetched DA.live JSON and rendered shared-ui itself) —
+> was proven separately and is **archived** at `../hal-headless-poc/`. This repo is the **native**
+> (EDS-rendered) track, plus the **Universal Editor** work on the roadmap below.
 
 ---
 
-## Track A — Headless (`frontend/`)
+## The core idea — "React islands"
 
-Our Next.js 16 + React 19 app fetches DA.live content and renders shared-ui. Flow:
+An EDS page is **mostly plain HTML** rendered by Adobe's edge (nav, text, images, footer — no React).
+Each of our components is a **self-contained pocket of React** — an *island* — mounted into one block's
+`<div>`, with its own React runtime bundled in. The rest of the page never loads React. (The term comes
+from "islands architecture": the page is the static ocean; each interactive component is a React island.)
 
-```
-DA.live sheet (authored) ──Publish──> JSON at *.aem.live/<sheet>.json
-        │
-        ▼  browser
-ChooseYourFareView.tsx  ──useQuery──>  daLiveClient.ts  ──fetch──>  /api/dalive
-        │                                                               │
-        │                            ★ THE API CALL HAPPENS HERE: src/app/api/dalive/route.ts
-        │                              (server fetches DA server-to-server → dodges CORS)
-        ▼
-mapDaLiveToChooseYourFare.ts  (flat key/value sheet → typed component props)
-        ▼
-<ChooseYourFare>  wrapped in providers (src/app/providers.tsx)
-```
-
-**Key files** (all already commented inline):
-- **`src/app/api/dalive/route.ts` — ★ where the API call happens.** Server-side proxy. DA's
-  published JSON sends no CORS header, so the browser can't fetch it cross-origin — this route
-  fetches it server-to-server. Preview vs live host chosen by `?preview`.
-- `src/lib/daLiveClient.ts` — browser-side client that calls the proxy + flattens the sheet envelope.
-- `src/app/[lang]/[region]/choose-your-fare/mapDaLiveToChooseYourFare.ts` — maps the flat
-  `card1.*` / `card2.*` key/value sheet into typed `ChooseYourFare` props.
-- `src/app/[lang]/[region]/choose-your-fare/ChooseYourFareView.tsx` — client component:
-  `useQuery` → map → render (with a `MOCK` fallback until the sheet is authored).
-- `src/app/providers.tsx` + `layout.tsx` — Redux + QueryClient + Router + ThemeProvider + design
-  tokens. shared-ui isn't SSR-safe → client-only render behind a `mounted` gate.
-
-Run it: `cd frontend && npm run dev` → open `/en/us/choose-your-fare`.
+EDS is **no-build**, so we pre-bundle the island (React + shared-ui + providers) with esbuild and **commit
+the output** — EDS serves it as-is.
 
 ---
 
-## Track B — Native / EDS-rendered (`blocks/`, `build/`, `component-*.json`)
-
-Adobe's edge renders the page; our shared-ui components run as **React islands** inside vanilla
-EDS blocks. EDS is *no-build*, so we pre-bundle the React runtime with esbuild and commit the output.
-
-### ★ How the React → block mapping works
+## ★ How the React → block mapping works
 
 When EDS renders a page, for each block named `<name>` it auto-imports `blocks/<name>/<name>.js`
 and calls its default export with the block's DOM element (EDS's `decorate()` contract):
@@ -99,7 +67,9 @@ createRoot(el).render( <Providers> <Button {...props}/> </Providers> )
 - `blocks/_react/react-runtime.js` / `.css` — **committed build output** (EDS is no-build, so the
   bundle must live in the repo).
 
-### The DA.live picker config (JSON — can't be commented inline, so documented here)
+---
+
+## The DA.live picker config (JSON — can't be commented inline, so documented here)
 - **`component-definition.json` — the picker.** The `hal-shared-ui` group lists our 5 blocks
   (button, headline, savings-badge, fare-card, choose-your-fare). Each has a
   `plugins.da.unsafeHTML` template (the block skeleton DA inserts) + `fields` (which cells are
@@ -108,14 +78,18 @@ createRoot(el).render( <Providers> <Button {...props}/> </Providers> )
   they can be dropped into a section.
 - `component-models.json` — field models that back the builder's edit forms.
 
-Build the island: `node build/esbuild.mjs` (needs Node ≥ 20 + the React/shared-ui deps installed locally over corp VPN — those deps are intentionally NOT in this repo's package.json, since the pre-built bundle above is what EDS serves).
-Test rendering locally: open `blocks/_react/gallery.html` (mimics EDS block loading for all 5).
+---
 
-### The last mile — what actually makes drag-drop work
+## The last mile — what actually makes drag-drop work
 The picker is a **cloud** feature: DA.live reads `component-definition.json` from the *deployed*
 branch. So the blocks + configs must be pushed to a branch DA.live can read; only then do they
-appear in the builder's block picker to drag. (Everything up to that point is done + test-driven
-locally via the gallery.)
+appear in the builder's block picker to drag. Everything up to that point is done + test-driven locally.
+
+Two ways content maps to page order:
+- **Reorder in the doc** → the page reorders 1:1 (EDS is document-driven; each block becomes a `<div>`
+  in the authored order, decorated top-to-bottom). Works today with just the committed block code.
+- **Drag / reorder in the builder** → needs `component-definition.json` deployed so the palette lists
+  the blocks.
 
 ---
 
@@ -127,16 +101,42 @@ component pulls in React + shared-ui; the rest share it.
 
 ---
 
+## Roadmap — what's next
+The renderer stays `@hal-sbn-root/shared-ui` throughout; we only change **who authors** and **who renders**.
+
+- **Now — Native drag-drop (this repo).** Blocks render on the EDS page; authors rearrange by reordering.
+  Last mile: push → deploy → the DA builder lists the blocks to drag.
+- **Next — Universal Editor (the "live editor").** In-context WYSIWYG editing, two flavors: **native**
+  (xwalk on EDS) and **headless** (instrument our own app). Both need **`data-aue-*` instrumentation per
+  component** + an **AEM** connection. The editing *overlay* is demoable locally; **saving** edits needs
+  the AEM backend (a DevOps/access item).
+- **Future — Content Fragments.** Structured, schema-defined headless content in AEM via GraphQL. Same
+  shared-ui renderer, different source — proves the design system is source-agnostic.
+
+---
+
+## Build & test
+- **Build the island:** `node build/esbuild.mjs` (Node ≥ 20 + the React/shared-ui deps installed locally
+  over corp VPN — deps are intentionally **not** in `package.json`, since the committed bundle is what
+  EDS serves).
+- **Test rendering, no deploy:** serve the repo statically and open `blocks/_react/gallery.html` (renders
+  all 5 components through the block code).
+- **Test on real EDS (your machine):** `npx @adobe/aem-cli up`, then hand-author a block table in a
+  DA.live doc → preview → it renders through the real EDS pipeline; reorder the tables → the page reorders.
+- **CI (`npm ci` + `npm run lint`) must pass:** the island (`blocks/_react/`, `build/`) is in
+  `.eslintignore` and the bundled CSS is in `.stylelintignore`; the private `shared-ui` dep is kept out of
+  `package.json` (CI can't reach HAL's Artifactory).
+
+---
+
 ## Repo layout cheat-sheet
 ```
 hal/
-├─ POC-GUIDE.md                 ← you are here (code map)
-├─ frontend/                    ← Track A: headless Next.js app
-│  ├─ public/aem-eds-pipeline.html   ← visual concept explainer
-│  └─ src/                            ← app, api/dalive proxy, client, mapper
-├─ blocks/                      ← Track B: EDS blocks
+├─ POC-GUIDE.md                 ← you are here
+├─ blocks/
 │  ├─ _react/                        ← the island engine (block.js, parse.js, registry, runtime, bundle, gallery)
 │  └─ button|headline|savings-badge|fare-card|choose-your-fare/   ← 2-line block entries
-├─ build/esbuild.mjs            ← Track B bundler
-└─ component-{definition,filters,models}.json   ← DA.live picker config
+├─ build/esbuild.mjs            ← island bundler
+├─ component-{definition,filters,models}.json   ← DA.live picker config
+└─ scripts | styles | head.html | fstab.yaml …  ← EDS boilerplate (base project)
 ```
