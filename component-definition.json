@@ -230,6 +230,7 @@
         {
           "title": "Button (shared-ui)",
           "id": "button",
+          "model": "button",
           "plugins": {
             "da": {
               "unsafeHTML": "<div class=\"button\"><div><div>children</div><div>Book your cruise</div></div><div><div>variant</div><div>primary</div></div></div>",
@@ -243,6 +244,7 @@
         {
           "title": "Headline (shared-ui)",
           "id": "headline",
+          "model": "headline",
           "plugins": {
             "da": {
               "unsafeHTML": "<div class=\"headline\"><div><div>children</div><div>Headline text</div></div></div>",
@@ -255,6 +257,7 @@
         {
           "title": "Savings Badge (shared-ui)",
           "id": "savings-badge",
+          "model": "savings-badge",
           "plugins": {
             "da": {
               "unsafeHTML": "<div class=\"savings-badge\"><div><div>text</div><div>Save $200 per guest</div></div></div>",
@@ -267,6 +270,7 @@
         {
           "title": "Fare Card (shared-ui)",
           "id": "fare-card",
+          "model": "fare-card",
           "plugins": {
             "da": {
               "unsafeHTML": "<div class=\"fare-card\"><div><div>title</div><div>Have It All</div></div><div><div>badgeLabel</div><div>Best value</div></div><div><div>isBestValue</div><div>true</div></div><div><div>currency</div><div>$</div></div><div><div>price</div><div>1,299</div></div><div><div>perPersonLabel</div><div>Per person</div></div><div><div>ctaLabel</div><div>Select</div></div><div><div>secondaryLabel</div><div>See details</div></div></div>",

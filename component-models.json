@@ -360,5 +360,40 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "button",
+    "fields": [
+      { "component": "text", "name": "children", "label": "Label", "valueType": "string" },
+      {
+        "component": "select",
+        "name": "variant",
+        "label": "Variant",
+        "options": [
+          { "name": "Primary", "value": "primary" },
+          { "name": "Secondary", "value": "secondary" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "headline",
+    "fields": [
+      { "component": "text", "name": "children", "label": "Text", "valueType": "string" }
+    ]
+  },
+  {
+    "id": "savings-badge",
+    "fields": [
+      { "component": "text", "name": "text", "label": "Text", "valueType": "string" }
+    ]
+  },
+  {
+    "id": "fare-card",
+    "fields": [
+      { "component": "text", "name": "title", "label": "Title", "valueType": "string" },
+      { "component": "text", "name": "price", "label": "Price", "valueType": "string" },
+      { "component": "text", "name": "ctaLabel", "label": "CTA Label", "valueType": "string" }
+    ]
   }
 ]
