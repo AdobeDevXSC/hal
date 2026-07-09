@@ -108,7 +108,7 @@ createRoot(el).render( <Providers> <Button {...props}/> </Providers> )
   they can be dropped into a section.
 - `component-models.json` — field models that back the builder's edit forms.
 
-Build the island: `npm run build:blocks` (needs Node ≥ 20 + shared-ui installed via corp VPN).
+Build the island: `node build/esbuild.mjs` (needs Node ≥ 20 + the React/shared-ui deps installed locally over corp VPN — those deps are intentionally NOT in this repo's package.json, since the pre-built bundle above is what EDS serves).
 Test rendering locally: open `blocks/_react/gallery.html` (mimics EDS block loading for all 5).
 
 ### The last mile — what actually makes drag-drop work

@@ -1,5 +1,5 @@
-// EDS block entry — auto-loaded for any block named "fare-card". Mounts the shared-ui
-// <FareCardDetails> as a React island. Flow: ../_react/block.js → parse.js → runtime.jsx · Map: ../../POC-GUIDE.md
+// EDS block entry — auto-loaded for a "fare-card" block.
+// Mounts shared-ui <FareCardDetails> as a React island (see ../_react/block.js).
 import { renderBlock } from '../_react/block.js';
 
 export default (block) => renderBlock(block, 'FareCardDetails');
