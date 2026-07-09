@@ -164,6 +164,26 @@
           }
         },
         {
+          "title": "Form",
+          "id": "form",
+          "model": "form",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"form\"><div><div><p><a href=\"/forms/form.json\">/forms/form.json</a></p></div></div><div><div><p><a href=\"https://example.com/submit\">https://example.com/submit</a></p></div></div></div>",
+              "fields": [
+                {
+                  "name": "source",
+                  "selector": "div:nth-child(1) a[href]"
+                },
+                {
+                  "name": "submit",
+                  "selector": "div:nth-child(2) a[href]"
+                }
+              ]
+            }
+          }
+        },
+        {
           "title": "Fragment",
           "id": "fragment",
           "model": "fragment",
