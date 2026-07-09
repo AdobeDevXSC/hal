@@ -324,6 +324,29 @@
     ]
   },
   {
+    "id": "form",
+    "fields": [
+      {
+        "component": "text",
+        "name": "source",
+        "label": "Form Definition URL",
+        "description": "Path to the form fields JSON (e.g. /forms/find-a-cruise.json)",
+        "valueType": "string",
+        "required": true,
+        "validation": {
+          "customErrorMsg": "Form definition URL is required"
+        }
+      },
+      {
+        "component": "text",
+        "name": "submit",
+        "label": "Submit Action URL",
+        "description": "Endpoint the form POSTs to (optional; omit for the search variant)",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
