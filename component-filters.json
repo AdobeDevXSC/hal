@@ -10,14 +10,22 @@
     "components": [
       "text",
       "image",
+      "accordion",
       "advanced-tabs",
       "card",
+      "cards",
+      "carousel",
       "columns",
+      "embed",
       "form",
       "fragment",
       "hero",
+      "quote",
       "schedule",
+      "search",
       "table",
+      "tabs",
+      "video",
       "youtube"
     ]
   },

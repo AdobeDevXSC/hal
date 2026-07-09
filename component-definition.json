@@ -240,6 +240,110 @@
               ]
             }
           }
+        },
+        {
+          "title": "Accordion",
+          "id": "accordion",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"accordion\"><div><div><p>Accordion label</p></div><div><p>Accordion body content goes here.</p></div></div><div><div><p>Second label</p></div><div><p>Second body content goes here.</p></div></div></div>"
+            }
+          }
+        },
+        {
+          "title": "Cards",
+          "id": "cards",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"cards\"><div><div><picture><img loading=\"lazy\" alt=\"\" src=\"\"></picture></div><div><p><strong>Card title</strong></p><p>Card description goes here.</p></div></div><div><div><picture><img loading=\"lazy\" alt=\"\" src=\"\"></picture></div><div><p><strong>Card title</strong></p><p>Card description goes here.</p></div></div></div>"
+            }
+          }
+        },
+        {
+          "title": "Carousel",
+          "id": "carousel",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"carousel\"><div><div><picture><img loading=\"lazy\" alt=\"\" src=\"\"></picture></div><div><h2>Slide title</h2><p>Slide description goes here.</p></div></div><div><div><picture><img loading=\"lazy\" alt=\"\" src=\"\"></picture></div><div><h2>Slide title</h2><p>Slide description goes here.</p></div></div></div>"
+            }
+          }
+        },
+        {
+          "title": "Embed",
+          "id": "embed",
+          "model": "embed",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"embed\"><div><div><p><a href=\"https://www.youtube.com/watch?v=\">https://www.youtube.com/watch?v=</a></p></div></div></div>",
+              "fields": [
+                {
+                  "name": "content",
+                  "selector": "a"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "title": "Quote",
+          "id": "quote",
+          "model": "quote",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"quote\"><div><div><p>Quotation goes here.</p></div></div><div><div><p>Attribution</p></div></div></div>",
+              "fields": [
+                {
+                  "name": "quotation",
+                  "selector": "div:nth-child(1)>div"
+                },
+                {
+                  "name": "attribution",
+                  "selector": "div:nth-child(2)>div"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "title": "Tabs",
+          "id": "tabs",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"tabs\"><div><div><p>Tab one</p></div><div><p>Tab one content goes here.</p></div></div><div><div><p>Tab two</p></div><div><p>Tab two content goes here.</p></div></div></div>"
+            }
+          }
+        },
+        {
+          "title": "Video",
+          "id": "video",
+          "model": "video",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"video\"><div><div><p><a href=\"https://example.com/video.mp4\">https://example.com/video.mp4</a></p></div></div></div>",
+              "fields": [
+                {
+                  "name": "content",
+                  "selector": "a"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "title": "Search",
+          "id": "search",
+          "model": "search",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"search\"><div><div><p><a href=\"/query-index.json\">/query-index.json</a></p></div></div></div>",
+              "fields": [
+                {
+                  "name": "source",
+                  "selector": "a"
+                }
+              ]
+            }
+          }
         }
       ]
     }
