@@ -1020,6 +1020,7 @@ npm run lint</div>
           <div class="skill-card">
             <div class="skill-card-header"><span class="skill-tag tag-da">MCP</span><span class="skill-card-name">Document Authoring MCP</span></div>
             <p class="skill-card-desc">An MCP server that reads and writes DA content programmatically over the DA Admin API (<code class="code-inline">admin.da.live</code>) — list, get, create, update, copy, move, delete sources, plus versions, fragment/media lookup, and media upload.</p>
+            <p class="skill-card-desc" style="margin-top:6px;">Endpoint: <a href="https://mcp.adobeaemcloud.com/adobe/mcp/da" target="_blank" rel="noopener"><code class="code-inline">mcp.adobeaemcloud.com/adobe/mcp/da</code></a></p>
           </div>
           <div class="skill-card">
             <div class="skill-card-header"><span class="skill-tag tag-hal">SKILL</span><span class="skill-card-name">Edge Delivery Services skill</span></div>
@@ -1028,7 +1029,10 @@ npm run lint</div>
         </div>
 
         <h3>Document Authoring MCP — capabilities</h3>
-        <p>The MCP surfaces the DA Admin API as tools scoped to <code class="code-inline">AdobeDevXSC/hal</code>:</p>
+        <p>The server runs at <a href="https://mcp.adobeaemcloud.com/adobe/mcp/da" target="_blank" rel="noopener"><code class="code-inline">https://mcp.adobeaemcloud.com/adobe/mcp/da</code></a>. Register it with your MCP client, for example:</p>
+        <div class="code-block"><span class="cmt"># Claude Code</span>
+claude mcp add --transport http da https://mcp.adobeaemcloud.com/adobe/mcp/da</div>
+        <p style="margin-top:12px;">Once connected, the MCP surfaces the DA Admin API as tools scoped to <code class="code-inline">AdobeDevXSC/hal</code>:</p>
         <table class="spec-table">
           <thead><tr><th>Tool</th><th>What it does</th></tr></thead>
           <tbody>
