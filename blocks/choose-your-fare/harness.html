@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>choose-your-fare — EDS React-in-a-block harness</title>
+<style>
+  body { margin: 0; background: #fff; font-family: system-ui, sans-serif; }
+  .banner { padding: 12px 20px; background: #022658; color: #fff; font-size: 13px; }
+  .banner b { color: #ffd7a8; }
+  main { padding: 12px 0; }
+</style>
+</head>
+<body>
+  <div class="banner">
+    <b>EDS-rendered (native) proof</b> · the card below is a real
+    <b>@hal-sbn-root/shared-ui</b> <b>ChooseYourFare</b> mounted <i>inside an EDS block's decorate()</i>
+    via React-in-a-block. The markup below mimics what EDS produces from an authored table.
+  </div>
+  <main>
+    <!-- Simulated EDS block markup: what an authored 2-column table renders to -->
+    <div class="choose-your-fare block" id="cyf">
+      <div><div>heading</div><div>How do you like to cruise?</div></div>
+      <div><div>description</div><div>Native EDS render — this card is a shared-ui React component mounted inside an EDS block.</div></div>
+      <div><div>pageSavingsBadge.text</div><div>You've saved $100 per guest so far</div></div>
+      <div><div>card1.title</div><div>Have It All (via EDS block)</div></div>
+      <div><div>card1.badgeLabel</div><div>Best value</div></div>
+      <div><div>card1.isBestValue</div><div>true</div></div>
+      <div><div>card1.currency</div><div>$</div></div>
+      <div><div>card1.price</div><div>1,299</div></div>
+      <div><div>card1.perPersonLabel</div><div>Per person</div></div>
+      <div><div>card1.strikePrice</div><div>$1,499*</div></div>
+      <div><div>card1.isShowSavingsBadge</div><div>true</div></div>
+      <div><div>card1.savingsText</div><div>Save $200!</div></div>
+      <div><div>card1.ctaLabel</div><div>Select Have It All</div></div>
+      <div><div>card1.secondaryLabel</div><div>See details</div></div>
+      <div><div>card2.title</div><div>Cruise Fare</div></div>
+      <div><div>card2.currency</div><div>$</div></div>
+      <div><div>card2.price</div><div>999</div></div>
+      <div><div>card2.perPersonLabel</div><div>Per person</div></div>
+      <div><div>card2.ctaLabel</div><div>Select Cruise Fare</div></div>
+      <div><div>card2.secondaryLabel</div><div>See details</div></div>
+    </div>
+  </main>
+  <script type="module">
+    import decorate from '/blocks/choose-your-fare/choose-your-fare.js';
+    decorate(document.getElementById('cyf'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>shared-ui components as EDS blocks — gallery</title>
+<style>
+  body { margin: 0; background: #fff; font-family: system-ui, sans-serif; color: #030f1f; }
+  .banner { padding: 12px 20px; background: #022658; color: #fff; font-size: 13px; }
+  .banner b { color: #ffd7a8; }
+  main { max-width: 900px; margin: 0 auto; padding: 20px; }
+  .demo { margin: 26px 0; padding: 18px; border: 1px solid #d9dbde; border-radius: 12px; }
+  .demo > h2 { margin: 0 0 12px; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: #e46c24; }
+  /* the authored tables are consumed by decorate(); hide the raw markup */
+  .block { display: block; }
+</style>
+</head>
+<body>
+  <div class="banner">
+    <b>shared-ui components as EDS blocks</b> — each card below is a real shared-ui React component,
+    mounted by its EDS block's <i>decorate()</i>, configured from an authored key/value table.
+    Adding a new component = one line in the registry + a 2-line block file.
+  </div>
+  <main>
+
+    <div class="demo">
+      <h2>Atom · Headline</h2>
+      <div class="headline block" data-block="headline">
+        <div><div>children</div><div>Welcome aboard — plan your voyage</div></div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <h2>Atom · Button</h2>
+      <div class="button block" data-block="button">
+        <div><div>children</div><div>Book your cruise</div></div>
+        <div><div>variant</div><div>primary</div></div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <h2>Molecule · SavingsBadge</h2>
+      <div class="savings-badge block" data-block="savings-badge">
+        <div><div>text</div><div>Save $200 per guest</div></div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <h2>Organism · FareCardDetails (Card)</h2>
+      <div class="fare-card block" data-block="fare-card">
+        <div><div>title</div><div>Have It All</div></div>
+        <div><div>badgeLabel</div><div>Best value</div></div>
+        <div><div>isBestValue</div><div>true</div></div>
+        <div><div>currency</div><div>$</div></div>
+        <div><div>price</div><div>1,299</div></div>
+        <div><div>perPersonLabel</div><div>Per person</div></div>
+        <div><div>strikePrice</div><div>$1,499*</div></div>
+        <div><div>isShowSavingsBadge</div><div>true</div></div>
+        <div><div>savingsText</div><div>Save $200!</div></div>
+        <div><div>ctaLabel</div><div>Select</div></div>
+        <div><div>secondaryLabel</div><div>See details</div></div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <h2>Template · ChooseYourFare</h2>
+      <div class="choose-your-fare block" data-block="choose-your-fare">
+        <div><div>heading</div><div>How do you like to cruise?</div></div>
+        <div><div>description</div><div>Pick the fare that fits.</div></div>
+        <div><div>pageSavingsBadge.text</div><div>You've saved $100 per guest so far</div></div>
+        <div><div>fareCards[0].id</div><div>have-it-all</div></div>
+        <div><div>fareCards[0].title</div><div>Have It All</div></div>
+        <div><div>fareCards[0].badgeLabel</div><div>Best value</div></div>
+        <div><div>fareCards[0].isBestValue</div><div>true</div></div>
+        <div><div>fareCards[0].currency</div><div>$</div></div>
+        <div><div>fareCards[0].price</div><div>1,299</div></div>
+        <div><div>fareCards[0].perPersonLabel</div><div>Per person</div></div>
+        <div><div>fareCards[0].ctaLabel</div><div>Select Have It All</div></div>
+        <div><div>fareCards[0].secondaryLabel</div><div>See details</div></div>
+        <div><div>fareCards[1].id</div><div>cruise-fare</div></div>
+        <div><div>fareCards[1].title</div><div>Cruise Fare</div></div>
+        <div><div>fareCards[1].currency</div><div>$</div></div>
+        <div><div>fareCards[1].price</div><div>999</div></div>
+        <div><div>fareCards[1].perPersonLabel</div><div>Per person</div></div>
+        <div><div>fareCards[1].ctaLabel</div><div>Select Cruise Fare</div></div>
+        <div><div>fareCards[1].secondaryLabel</div><div>See details</div></div>
+      </div>
+    </div>
+
+  </main>
+  <script type="module">
+    // Mimics EDS block loading: for each block, import /blocks/<name>/<name>.js and decorate.
+    document.querySelectorAll('[data-block]').forEach(async (el) => {
+      const name = el.dataset.block;
+      try {
+        const mod = await import(`/blocks/${name}/${name}.js`);
+        await mod.default(el);
+      } catch (e) {
+        el.innerHTML = `<pre style="color:#bb0000">${name} failed: ${e}</pre>`;
+      }
+    });
+  </script>
+</body>
+</html>

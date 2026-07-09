@@ -1,0 +1,5 @@
+/* The React island brings its own styling (bundled into choose-your-fare.island.css).
+   This just ensures the block is a full-width block-level container. */
+.choose-your-fare.block {
+  display: block;
+}
