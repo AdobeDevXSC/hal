@@ -13,13 +13,8 @@ import { registry } from './registry.jsx';
 const store = configureStore({ reducer: { app: (s = {}) => s } });
 const queryClient = new QueryClient();
 
-export function mountComponent(el, name, props) {
-  const Comp = registry[name];
-  if (!Comp) {
-    el.textContent = `[unknown shared-ui component: ${name}]`;
-    return;
-  }
-  createRoot(el).render(
+function tree(Comp, props) {
+  return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -28,6 +23,28 @@ export function mountComponent(el, name, props) {
           </ThemeProvider>
         </MemoryRouter>
       </QueryClientProvider>
-    </Provider>,
+    </Provider>
   );
+}
+
+// Mount into a dedicated child "island", keeping the authored source rows in the
+// DOM (hidden). Universal Editor edits the source + re-runs decorate on change;
+// by not clobbering the source and reusing the root, the re-render updates cleanly.
+export function mountComponent(block, name, props) {
+  const Comp = registry[name];
+  if (!Comp) {
+    block.textContent = `[unknown shared-ui component: ${name}]`;
+    return;
+  }
+  [...block.children].forEach((c) => {
+    if (!c.hasAttribute('data-island-root')) c.style.display = 'none';
+  });
+  let target = block.querySelector(':scope > [data-island-root]');
+  if (!target) {
+    target = document.createElement('div');
+    target.setAttribute('data-island-root', '');
+    block.append(target);
+    target._root = createRoot(target);
+  }
+  target._root.render(tree(Comp, props));
 }

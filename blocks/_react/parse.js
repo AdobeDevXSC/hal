@@ -29,6 +29,7 @@ function setPath(obj, path, value) {
 export function parseBlock(block) {
   const props = {};
   [...block.children].forEach((row) => {
+    if (row.hasAttribute('data-island-root')) return; // skip our React render target
     const cells = row.children;
     if (cells.length >= 2) {
       setPath(props, cells[0].textContent.trim(), cells[1].textContent.trim());
