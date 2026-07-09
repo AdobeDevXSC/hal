@@ -430,6 +430,7 @@
   .tag-js  { background: #fff8d6; color: #8a5e00; }
   .tag-css { background: #e9f1fc; color: #0d51b5; }
   .tag-da  { background: #f3edfb; color: #5b2d99; }
+  .tag-hal { background: #fdeee4; color: #b4531a; }
   .skill-card-name { font-size: 13px; font-weight: 700; color: var(--spectrum-gray-900); }
   .skill-card-desc { font-size: 12px; color: var(--spectrum-gray-600); line-height: 1.5; }
 
@@ -561,6 +562,10 @@
       <a class="sidebar-link" href="#blocks">
         <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1 3.5A1.5 1.5 0 012.5 2h2A1.5 1.5 0 016 3.5v2A1.5 1.5 0 014.5 7h-2A1.5 1.5 0 011 5.5v-2zm5.5 0A1.5 1.5 0 018 2h2a1.5 1.5 0 011.5 1.5v2A1.5 1.5 0 0110 7H8A1.5 1.5 0 016.5 5.5v-2zm-5.5 5A1.5 1.5 0 012.5 7h2A1.5 1.5 0 016 8.5v2A1.5 1.5 0 014.5 12h-2A1.5 1.5 0 011 10.5v-2zm5.5 0A1.5 1.5 0 018 7h2a1.5 1.5 0 011.5 1.5v2A1.5 1.5 0 0110 12H8A1.5 1.5 0 016.5 10.5v-2z"/></svg>
         Blocks reference
+      </a>
+      <a class="sidebar-link" href="#theming">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 000 16c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H12a4 4 0 004-4c0-3.87-3.59-7-8-7zm-4.5 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm3-4a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm2.5 4a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg>
+        Page themes
       </a>
     </div>
     <div class="sidebar-section">
@@ -836,11 +841,18 @@ npm run lint</div>
           Blocks reference
         </h2>
         <div class="section-rule"></div>
-        <p>Blocks are the reusable building blocks that add styling and behavior to authored content. Each lives in <code class="code-inline">/blocks/{name}/</code> as a <code class="code-inline">{name}.js</code> + <code class="code-inline">{name}.css</code> pair. The project currently ships these blocks:</p>
+        <p>Blocks are the reusable building blocks that add styling and behavior to authored content. Each lives in <code class="code-inline">/blocks/{name}/</code> as a <code class="code-inline">{name}.js</code> + <code class="code-inline">{name}.css</code> pair. The project ships the standard boilerplate blocks plus a set of HAL-custom cruise blocks:</p>
+        <h3>HAL cruise blocks</h3>
         <div class="skills-grid">
-          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">header</span></div><p class="skill-card-desc">Site navigation, styled to match the Holland America Line brand.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-hal">HAL</span><span class="skill-card-name">cruise-ships</span></div><p class="skill-card-desc">Responsive fleet grid mirroring hollandamerica.com/cruise-ships — ship image, name, class, and detail link. Fetches from a configurable feed endpoint (defaults to a bundled sample).</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-hal">HAL</span><span class="skill-card-name">find-a-cruise</span></div><p class="skill-card-desc">Cruise finder with destination / ship / port / duration filters, result cards, and load-more paging. Backed by a configurable endpoint (bundled sample of the Fusion search response).</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-hal">HAL</span><span class="skill-card-name">hero-search</span></div><p class="skill-card-desc">Home hero with a cruise-search widget; the Search button routes to the find-a-cruise page.</p></div>
+        </div>
+        <h3>Standard blocks</h3>
+        <div class="skills-grid">
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">header</span></div><p class="skill-card-desc">Site navigation, rebuilt to match the Holland America Line brand.</p></div>
           <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">footer</span></div><p class="skill-card-desc">Global footer authored from a DA fragment.</p></div>
-          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">hero</span></div><p class="skill-card-desc">Branded hero with imagery and headline, imported from poc-adobe-eds.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">hero</span></div><p class="skill-card-desc">Variant-driven: default image hero, plus a <code class="code-inline">video</code> variant where the image is the LCP poster and a muted autoplay video is layered on top (LCP-gated, reduced-motion aware).</p></div>
           <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">cards</span></div><p class="skill-card-desc">Responsive card grid using the brand palette.</p></div>
           <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">carousel</span></div><p class="skill-card-desc">Rotating slides for featured content.</p></div>
           <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">columns</span></div><p class="skill-card-desc">Multi-column layout for mixed content.</p></div>
@@ -851,13 +863,36 @@ npm run lint</div>
           <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">embed</span></div><p class="skill-card-desc">Third-party embeds (video, social, etc.).</p></div>
           <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">video</span></div><p class="skill-card-desc">Inline and modal video playback.</p></div>
           <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">modal</span></div><p class="skill-card-desc">Overlay dialogs triggered from content.</p></div>
-          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">form</span></div><p class="skill-card-desc">Author-configurable forms.</p></div>
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">form</span></div><p class="skill-card-desc">Author-configurable forms, including a <code class="code-inline">search</code> variant used for the cruise search bar.</p></div>
           <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">search</span></div><p class="skill-card-desc">On-site search experience.</p></div>
           <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-js">BLOCK</span><span class="skill-card-name">fragment</span></div><p class="skill-card-desc">Reuse content authored elsewhere in DA.</p></div>
         </div>
-        <div class="notice tip" style="margin-top:20px;">
+        <div class="notice info" style="margin-top:20px;">
+          <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
+          <span>Deep dive: <a href="cruise-ships-architecture.html">Cruise Ships Page — How It's Built &amp; Connected</a> walks through how the <code class="code-inline">cruise-ships</code> block wires DA authoring, the ship feed, and the search API together on EDS.</span>
+        </div>
+        <div class="notice tip">
           <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L7 8.94 5.28 7.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l4.25-4.25z"/></svg>
           <span>Coding standards, block conventions, and the publishing workflow live in <a href="https://github.com/AdobeDevXSC/hal/blob/main/AGENTS.md" target="_blank" rel="noopener">AGENTS.md</a> at the repository root.</span>
+        </div>
+      </section>
+
+      <!-- PAGE THEMES -->
+      <section class="doc-section" id="theming">
+        <h2>
+          <span class="section-icon icon-orange">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 000 16c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H12a4 4 0 004-4c0-3.87-3.59-7-8-7zm-4.5 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm3-4a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm2.5 4a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/></svg>
+          </span>
+          Page themes
+        </h2>
+        <div class="section-rule"></div>
+        <p>Beyond global brand styles, individual pages can opt into a page-level theme via the page metadata <code class="code-inline">theme</code> field. The theme value becomes a class on <code class="code-inline">&lt;body&gt;</code>, which CSS targets.</p>
+        <div class="skills-grid">
+          <div class="skill-card"><div class="skill-card-header"><span class="skill-tag tag-css">THEME</span><span class="skill-card-name">map</span></div><p class="skill-card-desc">Paints an authored map image as a full-page navy wallpaper (<code class="code-inline">#022658</code>) that scrolls with the content; text, headings, and plain links lift to white for contrast. Defined in <code class="code-inline">styles/lazy-styles.css</code> as it's decorative, not LCP-critical.</p></div>
+        </div>
+        <div class="notice info">
+          <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
+          <span>Set <code class="code-inline">theme</code> to <code class="code-inline">map</code> in a page's metadata to apply <code class="code-inline">body.map</code>. Add new themes by defining a matching <code class="code-inline">body.{theme}</code> rule.</span>
         </div>
       </section>
 
