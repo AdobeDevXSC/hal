@@ -1,0 +1,5 @@
+/* The React island (react-runtime.css) provides this component's styling.
+   This file exists so EDS loadBlock() doesn't 404 on the block CSS. */
+.savings-badge.block {
+  display: block;
+}
