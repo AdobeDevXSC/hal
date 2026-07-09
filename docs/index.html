@@ -575,6 +575,13 @@
         Translation &amp; localization
       </a>
     </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Tooling</div>
+      <a class="sidebar-link" href="#tooling">
+        <svg class="icon" viewBox="0 0 16 16" fill="currentColor"><path d="M11.5 1a3.5 3.5 0 00-3.32 4.61L1.6 12.18a1.5 1.5 0 102.12 2.12l6.57-6.57A3.5 3.5 0 1011.5 1zm0 1.5a2 2 0 11-.001 4.001A2 2 0 0111.5 2.5z"/></svg>
+        AI tooling
+      </a>
+    </div>
   </nav>
 
   <!-- MAIN CONTENT -->
@@ -995,6 +1002,60 @@ npm run lint</div>
         <div class="notice info">
           <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
           <span>Add HAL-specific do-not-translate entries — brand names (e.g. "Holland America Line", ship names like "Koningsdam"), trademarked phrases, and campaign slugs — to <code class="code-inline">dnt-content-rules</code> so machine translation leaves them intact.</span>
+        </div>
+      </section>
+
+      <!-- AI TOOLING -->
+      <section class="doc-section" id="tooling">
+        <h2>
+          <span class="section-icon icon-purple">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M11.5 1a3.5 3.5 0 00-3.32 4.61L1.6 12.18a1.5 1.5 0 102.12 2.12l6.57-6.57A3.5 3.5 0 1011.5 1zm0 1.5a2 2 0 11-.001 4.001A2 2 0 0111.5 2.5z"/></svg>
+          </span>
+          AI tooling
+        </h2>
+        <div class="section-rule"></div>
+        <p>This project is built and maintained with <strong>Claude Code</strong> using two Adobe extensions: the <strong>Document Authoring MCP</strong> for content operations, and the <strong>Edge Delivery Services skill</strong> for development. Both target this project's org/site, <code class="code-inline">AdobeDevXSC/hal</code>.</p>
+
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="skill-card-header"><span class="skill-tag tag-da">MCP</span><span class="skill-card-name">Document Authoring MCP</span></div>
+            <p class="skill-card-desc">An MCP server that reads and writes DA content programmatically over the DA Admin API (<code class="code-inline">admin.da.live</code>) — list, get, create, update, copy, move, delete sources, plus versions, fragment/media lookup, and media upload.</p>
+          </div>
+          <div class="skill-card">
+            <div class="skill-card-header"><span class="skill-tag tag-hal">SKILL</span><span class="skill-card-name">Edge Delivery Services skill</span></div>
+            <p class="skill-card-desc">A Claude Code plugin of EDS skills — content-driven development, block building &amp; content modeling, page import/migration, block testing, and docs search — grounded in the <a href="https://www.aem.live/docs/" target="_blank" rel="noopener">aem.live</a> documentation.</p>
+          </div>
+        </div>
+
+        <h3>Document Authoring MCP — capabilities</h3>
+        <p>The MCP surfaces the DA Admin API as tools scoped to <code class="code-inline">AdobeDevXSC/hal</code>:</p>
+        <table class="spec-table">
+          <thead><tr><th>Tool</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td>da_list_sources</td><td>List content sources (pages, sheets, media) under a path.</td></tr>
+            <tr><td>da_get_source</td><td>Read the HTML/JSON of a specific source.</td></tr>
+            <tr><td>da_create_source · da_update_source</td><td>Create or update a page or sheet.</td></tr>
+            <tr><td>da_copy_content · da_move_content</td><td>Copy or move content between paths.</td></tr>
+            <tr><td>da_delete_source</td><td>Delete a source.</td></tr>
+            <tr><td>da_get_versions</td><td>Inspect version history for a source.</td></tr>
+            <tr><td>da_lookup_fragment · da_lookup_media</td><td>Resolve fragments and referenced media.</td></tr>
+            <tr><td>da_upload_media</td><td>Upload an image or asset into the DA media library.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Edge Delivery Services skill — what it covers</h3>
+        <p>The skill encodes the conventions in <a href="https://github.com/AdobeDevXSC/hal/blob/main/AGENTS.md" target="_blank" rel="noopener">AGENTS.md</a> and the practices below, so generated code follows EDS standards:</p>
+        <ul>
+          <li><strong>Content-driven development</strong> — decide the block's content model before writing code.</li>
+          <li><strong>Building blocks &amp; content modeling</strong> — block JS/CSS conventions, initial structure as the author contract.</li>
+          <li><strong>Page import / migration</strong> — scrape a source page and map it onto existing blocks.</li>
+          <li><strong>Testing blocks</strong> — lint, local preview, and performance validation before a PR.</li>
+          <li><strong>Docs search</strong> — grounded lookups against the aem.live documentation.</li>
+        </ul>
+
+        <div class="notice tip">
+          <svg class="notice-icon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L7 8.94 5.28 7.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.06 0l4.25-4.25z"/></svg>
+          <span>For guidance on working effectively with these AI tools, see <a href="https://www.aem.live/developer/ai-coding-agents" target="_blank" rel="noopener">aem.live — AI coding agents</a>.</span>
         </div>
       </section>
 
