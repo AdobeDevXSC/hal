@@ -445,5 +445,58 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "embed",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "content",
+        "label": "Embed Link",
+        "description": "YouTube, Vimeo, Twitter/X, or other embeddable URL",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "quote",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "quotation",
+        "label": "Quotation",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "attribution",
+        "label": "Attribution",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "video",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "content",
+        "label": "Video Link",
+        "description": "MP4/WebM URL, or a YouTube/Vimeo link",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "source",
+        "label": "Index Source",
+        "description": "Path to the query index (defaults to /query-index.json)",
+        "valueType": "string"
+      }
+    ]
   }
 ]
