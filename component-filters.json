@@ -10,6 +10,10 @@
     "components": [
       "text",
       "image",
+      "button",
+      "headline",
+      "savings-badge",
+      "fare-card",
       "accordion",
       "advanced-tabs",
       "card",

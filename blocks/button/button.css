@@ -1,0 +1,27 @@
+/*
+ * button.css — two small jobs:
+ *
+ * 1. Exist. Edge Delivery always loads <block>.css. If it were missing the request
+ *    would 404, and a 404 makes the block collapse when the editor re-renders it.
+ *    The real button styling comes from the compiled bundle (react-runtime.css).
+ *
+ * 2. Hide the author's rows. block.js keeps the author's table in the page (so the
+ *    editor can edit it) but tags each row with [data-island-source]. The rule
+ *    below hides those rows visually while keeping them in the page — we use clip,
+ *    NOT display:none, so the editor can still see and instrument the fields.
+ */
+.button.block {
+  display: block;
+}
+
+.button.block [data-island-source] {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
