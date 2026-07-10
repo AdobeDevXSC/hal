@@ -402,6 +402,32 @@
           }
         }
       ]
+    },
+    {
+      "title": "HAL shared-ui (React)",
+      "id": "hal-shared-ui",
+      "components": [
+        {
+          "title": "Button (shared-ui)",
+          "id": "button",
+          "model": "button",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"button\"><div><div>children</div><div>Book your cruise</div></div><div><div>variant</div><div>primary</div></div></div>",
+              "fields": [
+                {
+                  "name": "children",
+                  "selector": "div:nth-child(1)>div:nth-child(2)"
+                },
+                {
+                  "name": "variant",
+                  "selector": "div:nth-child(2)>div:nth-child(2)"
+                }
+              ]
+            }
+          }
+        }
+      ]
     }
   ]
 }

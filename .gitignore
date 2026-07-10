@@ -8,6 +8,9 @@ helix-importer-ui
 *.bak
 .idea
 
+# Local-only: contains the internal HAL/SBN Artifactory URL. Each dev creates their own. Never commit.
+.npmrc
+
 # Ensure these files are tracked
 !CLAUDE.md
 !AGENTS.md

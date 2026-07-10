@@ -1,0 +1,6 @@
+/* Real styling comes from the bundled shared-ui CSS (react-runtime.css).
+   This file exists so EDS loadBlock() doesn't 404 — a 404 collapses the
+   block when Universal Editor re-renders it. */
+.button.block {
+  display: block;
+}
