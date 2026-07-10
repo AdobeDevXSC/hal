@@ -1,6 +1,21 @@
-// The React "island" — esbuild entry point. Bundled to react-runtime.js (+ .css),
-// both committed because EDS is no-build. Mounts a registered shared-ui component
-// into a target element, wrapped in the providers shared-ui expects.
+/*
+ * runtime.jsx — the ONLY file we "compile". Everything else in this folder is
+ * plain JavaScript the browser runs as-is.
+ *
+ * Why compile? HAL's components are React, and React has to be bundled. So we run
+ *     node build/esbuild.mjs
+ * which turns THIS file (plus React and the HAL library) into two ready-to-serve
+ * files: react-runtime.js and react-runtime.css. Both are committed to git,
+ * because Edge Delivery serves files directly — there is no build step on the server.
+ *
+ * What it exposes: mountComponent(), which draws a HAL component into a given spot
+ * on the page. The component is wrapped in the "providers" the HAL library expects
+ * — think of them as the batteries every component needs to run:
+ *   - Provider (Redux)          → shared state
+ *   - QueryClientProvider       → data fetching/cache (unused by static blocks, but required)
+ *   - MemoryRouter              → routing context
+ *   - ThemeProvider brand="hal" → HAL colors, fonts and design tokens
+ */
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
@@ -13,11 +28,14 @@ import { registry } from './registry.jsx';
 const store = configureStore({ reducer: { app: (s = {}) => s } });
 const queryClient = new QueryClient();
 
-// React roots kept OFF the DOM element: a root stored on the node itself is lost
-// when Universal Editor serializes/reloads the DOM, which then crashes on the
-// next render. Keyed by the render target; healed (recreated) if absent.
+// A React "root" owns one spot on the page. We keep roots in a WeakMap keyed by
+// the target element — NOT on the element itself. The editor can throw the page's
+// JavaScript away and rebuild the DOM; a root stored on the element would be lost
+// and crash on the next draw. If a root is ever missing, we simply make a new one
+// ("heal") so the component keeps working.
 const roots = new WeakMap();
 
+// The "batteries" wrapper shared by every component.
 function Providers({ children }) {
   return (
     <Provider store={store}>
@@ -32,6 +50,8 @@ function Providers({ children }) {
   );
 }
 
+// Draw component `name` with settings `props` into element `el`.
+// Called on first render AND every time the author edits.
 export function mountComponent(el, name, props) {
   const Comp = registry[name];
   if (!Comp) {
@@ -40,9 +60,7 @@ export function mountComponent(el, name, props) {
   }
   let root = roots.get(el);
   if (!root) {
-    // Heal: after a UE reload the WeakMap is empty but the target may still hold
-    // stale markup — clear it, then own it with a fresh root.
-    el.innerHTML = '';
+    el.innerHTML = ''; // heal: clear anything stale, then take ownership
     root = createRoot(el);
     roots.set(el, root);
   }

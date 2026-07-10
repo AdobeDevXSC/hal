@@ -1,13 +1,19 @@
-/* Real styling comes from the bundled shared-ui CSS (react-runtime.css).
-   This file exists so EDS loadBlock() doesn't 404 — a 404 collapses the
-   block when Universal Editor re-renders it. */
+/*
+ * button.css — two small jobs:
+ *
+ * 1. Exist. Edge Delivery always loads <block>.css. If it were missing the request
+ *    would 404, and a 404 makes the block collapse when the editor re-renders it.
+ *    The real button styling comes from the compiled bundle (react-runtime.css).
+ *
+ * 2. Hide the author's rows. block.js keeps the author's table in the page (so the
+ *    editor can edit it) but tags each row with [data-island-source]. The rule
+ *    below hides those rows visually while keeping them in the page — we use clip,
+ *    NOT display:none, so the editor can still see and instrument the fields.
+ */
 .button.block {
   display: block;
 }
 
-/* Keep the authored rows in the DOM so Universal Editor can bind + edit them,
-   but out of sight — the rendered React Button is what the author sees. This is
-   visually-hidden (clip), NOT display:none, so UE still instruments the fields. */
 .button.block [data-island-source] {
   position: absolute !important;
   width: 1px;
