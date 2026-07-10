@@ -1,24 +1,23 @@
 /*
  * parse.js — turns the author's content into settings ("props") for the component.
  *
- * In the editor an author fills in a small table:
+ * An author fills in a small table:
  *
  *     children | Book your cruise
  *     variant  | primary
  *
- * This file reads that table and returns the settings the React component wants:
+ * and this returns { children: "Book your cruise", variant: "primary" }.
  *
- *     { children: "Book your cruise", variant: "primary" }
+ * Finding each field's NAME is the tricky part, because it depends on where we run:
+ *   1. Universal Editor — the value cell is tagged with data-aue-prop (the name); trust it.
+ *   2. Published / normal page — no data-aue-prop, AND the editor has WIPED the name
+ *      cell in the saved source. So we fall back to POSITION: the caller passes the
+ *      field names in order (e.g. ['children','variant']) → row 0 = children, row 1 = variant.
+ *   3. Legacy (hand-authored, name cell intact, no field list) — read the name cell.
  *
- * It copes with two shapes of that table:
- *   1. Normal page  — first cell is the name, second cell is the value.
- *   2. In Universal Editor — the editor tags the VALUE cell with `data-aue-prop`
- *      (which holds the name) and can BLANK OUT the name cell when the author
- *      edits a field. So when that tag is present we trust it, not the name cell.
- *      (Reading the name from the blanked cell was our "editing goes blank" bug.)
- *
- * Extras: names like "fareCards[0].title" build nested objects/arrays, and the
- * words "true"/"false" become real booleans.
+ * The value is always the row's last cell (or the data-aue-prop cell in the editor).
+ * Extras: names like "fareCards[0].title" build nested objects/arrays, and the words
+ * "true"/"false" become real booleans.
  */
 
 // "true"/"false" text becomes a real boolean; anything else stays as text.
@@ -45,22 +44,23 @@ function setPath(obj, path, value) {
   }
 }
 
-export function parseBlock(block) {
+// `fields` (optional) is the ordered list of field names for this block, used when
+// the name cell is gone (published pages after a UE edit).
+export function parseBlock(block, fields) {
   const props = {};
+  let i = -1; // position among the author's rows (skips our render box)
   [...block.children].forEach((row) => {
     if (row.hasAttribute('data-island-root')) return; // skip the box we draw into
-    // Prefer the editor's tag: it names the field even after the editor has
-    // wiped the human-readable name cell on save.
-    const aue = row.querySelector('[data-aue-prop]');
-    if (aue) {
-      setPath(props, aue.getAttribute('data-aue-prop'), aue.textContent.trim());
-      return;
-    }
-    // Normal page: [ name cell, value cell ].
+    i += 1;
     const cells = row.children;
-    if (cells.length >= 2) {
-      setPath(props, cells[0].textContent.trim(), cells[1].textContent.trim());
-    }
+    const aue = row.querySelector('[data-aue-prop]');
+    const valueEl = aue || cells[cells.length - 1];
+    const value = valueEl ? valueEl.textContent.trim() : '';
+    let name;
+    if (aue) name = aue.getAttribute('data-aue-prop'); // 1. editor tag
+    else if (fields && fields[i] != null) name = fields[i]; // 2. by position
+    else if (cells.length >= 2) name = cells[0].textContent.trim(); // 3. legacy name cell
+    if (name) setPath(props, name, value);
   });
   return props;
 }

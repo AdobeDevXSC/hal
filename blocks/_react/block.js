@@ -54,7 +54,7 @@ function inIsland(node) {
 // component would show stale text until a refresh. This watches the author's rows
 // and redraws whenever they change — ignoring the component's own output so it
 // can't loop. Set up only inside the editor; live pages need no watcher.
-function observeEditorEdits(block, host, componentName, mount) {
+function observeEditorEdits(block, host, componentName, mount, fields) {
   if (observed.has(block)) return;
   observed.add(block);
   let scheduled = false;
@@ -64,14 +64,16 @@ function observeEditorEdits(block, host, componentName, mount) {
     scheduled = true;
     requestAnimationFrame(() => {
       scheduled = false;
-      mount(host, componentName, parseBlock(block));
+      mount(host, componentName, parseBlock(block, fields));
     });
   });
   obs.observe(block, { childList: true, subtree: true, characterData: true });
 }
 
-export async function renderBlock(block, componentName) {
-  const props = parseBlock(block);            // 1. read the author's table
+// `fields` is the block's field names in order (e.g. ['children','variant']). It
+// lets parse.js name fields by position when the editor has wiped the name cells.
+export async function renderBlock(block, componentName, fields) {
+  const props = parseBlock(block, fields);    // 1. read the author's table
   ensureIslandCss();                          // 2. make sure component styles are loaded
   [...block.children].forEach((row) => {      // 3. hide the rows, but keep them for the editor
     if (!row.hasAttribute('data-island-root')) row.setAttribute('data-island-source', '');
@@ -82,6 +84,6 @@ export async function renderBlock(block, componentName) {
 
   // 6. In the editor only (block carries data-aue-resource), keep it live.
   if (block.hasAttribute('data-aue-resource')) {
-    observeEditorEdits(block, host, componentName, mountComponent);
+    observeEditorEdits(block, host, componentName, mountComponent, fields);
   }
 }
