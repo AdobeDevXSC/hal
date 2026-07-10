@@ -27,24 +27,36 @@ function tree(Comp, props) {
   );
 }
 
+// Roots are tracked in a WeakMap, NOT on the DOM element. A `_root` property is
+// lost when Universal Editor serializes + reloads the DOM, which would leave an
+// island target with no root (→ crash, "component not showing"). Keyed by element,
+// a fresh or serialized target simply isn't in the map, so we (re)create its root.
+const roots = new WeakMap();
+
 // Mount into a dedicated child "island", keeping the authored source rows in the
-// DOM (hidden). Universal Editor edits the source + re-runs decorate on change;
-// by not clobbering the source and reusing the root, the re-render updates cleanly.
+// DOM (hidden) so UE can edit them + re-run decorate. Robust to UE's serialize/
+// reload: an existing island target with no tracked root is healed, not crashed.
 export function mountComponent(block, name, props) {
   const Comp = registry[name];
   if (!Comp) {
     block.textContent = `[unknown shared-ui component: ${name}]`;
     return;
   }
-  [...block.children].forEach((c) => {
-    if (!c.hasAttribute('data-island-root')) c.style.display = 'none';
-  });
   let target = block.querySelector(':scope > [data-island-root]');
   if (!target) {
     target = document.createElement('div');
     target.setAttribute('data-island-root', '');
     block.append(target);
-    target._root = createRoot(target);
   }
-  target._root.render(tree(Comp, props));
+  // Hide the authored source (everything except the island target).
+  [...block.children].forEach((c) => {
+    if (c !== target) c.style.display = 'none';
+  });
+  let root = roots.get(target);
+  if (!root) {
+    target.replaceChildren(); // drop any stale (serialized) React output first
+    root = createRoot(target);
+    roots.set(target, root);
+  }
+  root.render(tree(Comp, props));
 }
