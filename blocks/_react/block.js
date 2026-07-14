@@ -87,3 +87,4 @@ export async function renderBlock(block, componentName, fields) {
     observeEditorEdits(block, host, componentName, mountComponent, fields);
   }
 }
+// (cache-bust: re-touched to force Edge Delivery to redeploy this file)
