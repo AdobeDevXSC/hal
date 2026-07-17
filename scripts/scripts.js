@@ -36,6 +36,9 @@ function buildHeroBlock(main) {
  */
 async function loadFonts() {
   await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
+  // Adobe Fonts (quasimoda) for the nav; loaded async so it never blocks LCP,
+  // the Roboto fallback in fonts.css covers text until this swaps in
+  loadCSS('https://use.typekit.net/mvi1kov.css');
   try {
     if (!window.location.hostname.includes('localhost')) sessionStorage.setItem('fonts-loaded', 'true');
   } catch (e) {
